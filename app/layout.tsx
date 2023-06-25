@@ -5,19 +5,18 @@ import "../global.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "chronark.com",
-    template: "%s | chronark.com",
+    default: "tyeetale.vercel.app",
+    template: "%s | tyeetale.vercel.app",
   },
-  description: "Software engineer at upstash.com and founder of planetfall.io",
+  description: "developer + designer,  founder of tildenn.com",
   openGraph: {
-    title: "chronark.com",
-    description:
-      "Software engineer at upstash.com and founder of planetfall.io",
-    url: "https://chronark.com",
-    siteName: "chronark.com",
+    title: "tyeetale.vercel.app",
+    description: "developer + designer,  founder of tildenn.com",
+    url: "https://tyeetale.vercel.app",
+    siteName: "tyeetale.vercel.app",
     images: [
       {
-        url: "https://chronark.com/og.png",
+        url: "https://tyeetale.vercel.app/og.png",
         width: 1920,
         height: 1080,
       },
@@ -37,7 +36,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Chronark",
+    title: "Tyeetale",
     card: "summary_large_image",
   },
   icons: {
