@@ -1,7 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require("path");
-
 /** @type {import("eslint").Linter.Config} */
+
 const config = {
   overrides: [
     {
@@ -10,16 +8,21 @@ const config = {
       ],
       files: ["*.ts", "*.tsx"],
       parserOptions: {
-        project: path.join(__dirname, "tsconfig.json"),
+        project: "tsconfig.json",
       },
     },
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: path.join(__dirname, "tsconfig.json"),
+    project: "./tsconfig.json",
   },
   plugins: ["@typescript-eslint"],
-  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  extends: [
+    "next",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
   rules: {
     "@typescript-eslint/consistent-type-imports": [
       "warn",
@@ -28,7 +31,28 @@ const config = {
         fixStyle: "inline-type-imports",
       },
     ],
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        extendDefaults: true,
+        types: {
+          "{}": false,
+        },
+      },
+    ],
+    "no-console": [
+      "error",
+      {
+        allow: ["debug", "warn", "error"],
+      },
+    ],
+    "no-unused-vars": [
+      1,
+      {
+        args: "after-used",
+        argsIgnorePattern: "^_",
+      },
+    ],
   },
 };
 
