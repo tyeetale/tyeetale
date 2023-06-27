@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
-import "./globals.css";
+import { ThemeProvider } from "~/components/theme/theme-provider";
+import "../styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const productSans = localFont({
@@ -14,21 +15,6 @@ export const metadata = {
     template: "%s | tyeetale.vercel.app",
   },
   description: "developer + designer,  founder of tildenn.com",
-  openGraph: {
-    title: "tyeetale.vercel.app",
-    description: "developer + designer,  founder of tildenn.com",
-    url: "https://tyeetale.vercel.app",
-    siteName: "tyeetale.vercel.app",
-    images: [
-      {
-        url: "https://tyeetale.vercel.app/og.png",
-        width: 1920,
-        height: 1080,
-      },
-    ],
-    locale: "en-US",
-    type: "website",
-  },
   robots: {
     index: true,
     follow: true,
@@ -39,10 +25,6 @@ export const metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  twitter: {
-    title: "Tyeetale",
-    card: "summary_large_image",
   },
   icons: {
     shortcut: "/favicon.png",
@@ -59,7 +41,11 @@ export default function RootLayout({
       lang="en"
       className={[inter.variable, productSans.variable].join(" ")}
     >
-      <body>{children}</body>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
