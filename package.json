@@ -1,44 +1,38 @@
 {
-  "name": "tyeetale",
+  "name": "my-t3-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "fmt": "pnpm rome check . --apply-suggested && pnpm rome format . --write"
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
-    "@next/font": "^13.4.3",
-    "@next/mdx": "^13.4.3",
-    "@types/node": "20.2.1",
-    "@types/react": "18.2.6",
-    "@types/react-dom": "18.2.4",
-    "@upstash/redis": "^1.20.6",
-    "contentlayer": "^0.3.0",
-    "framer-motion": "^10.12.12",
-    "lucide-react": "^0.220.0",
-    "markdown-wasm": "^1.2.0",
-    "next": "13.4.3",
-    "next-contentlayer": "^0.3.0",
+    "@t3-oss/env-nextjs": "^0.3.1",
+    "next": "^13.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-wrap-balancer": "^0.5.0",
-    "rehype-autolink-headings": "^6.1.1",
-    "rehype-pretty-code": "^0.9.4",
-    "rehype-slug": "^5.1.0",
-    "remark-gfm": "^3.0.1",
-    "typescript": "5.0.4"
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@opentelemetry/api": "^1.4.1",
-    "@tailwindcss/line-clamp": "^0.4.2",
-    "@tailwindcss/typography": "^0.5.9",
-    "autoprefixer": "^10.4.13",
+    "@types/eslint": "^8.37.0",
+    "@types/node": "^18.16.0",
+    "@types/prettier": "^2.7.2",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.40.0",
+    "eslint-config-next": "^13.4.2",
     "postcss": "^8.4.21",
-    "postcss-nesting": "^11.2.2",
-    "rome": "^11.0.0",
-    "tailwindcss": "^3.2.7",
-    "tailwindcss-debug-screens": "^2.2.1"
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.4"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.14.1"
   }
 }
