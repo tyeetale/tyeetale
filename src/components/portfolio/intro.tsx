@@ -21,14 +21,7 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { Separator } from "../ui/separator";
-
-const projects: { title: string; href: string; description: string }[] = [
-  {
-    title: "Tildenn",
-    href: "/portfolio/tildenn",
-    description: "The flexible travel app",
-  },
-];
+import { projects } from "./projectPreviews";
 
 const skillset = [
   "Product Design",

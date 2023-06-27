@@ -1,6 +1,7 @@
 "use client";
 
 import Intro from "~/components/portfolio/intro";
+import ProjectPreviews from "~/components/portfolio/projectPreviews";
 import { Separator } from "~/components/ui/separator";
 
 const Portfolio = () => {
@@ -14,7 +15,7 @@ const Portfolio = () => {
           className="h-full w-[2px] bg-zinc-300"
         />
 
-        <section className="w-2/3 border">hi</section>
+        <ProjectPreviews />
       </div>
     </main>
   );
