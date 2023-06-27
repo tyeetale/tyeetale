@@ -1,13 +1,11 @@
-import LocalFont from "@next/font/local";
-import "../globals.css";
-const productSansBold = LocalFont({
-  src: "../public/fonts/ProductSans-Bold.ttf",
-  variable: "--font-productsans-bold",
-});
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+import "./globals.css";
 
-const productSansRegular = LocalFont({
-  src: "../public/fonts/ProductSans-Regular.ttf",
-  variable: "--font-productsans-regular",
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const productSans = localFont({
+  src: "../../public/fonts/ProductSans-Bold.ttf",
+  variable: "--font-productsans",
 });
 
 export const metadata = {
@@ -59,9 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={[productSansBold.variable, productSansRegular.variable].join(
-        " "
-      )}
+      className={[inter.variable, productSans.variable].join(" ")}
     >
       <body>{children}</body>
     </html>
