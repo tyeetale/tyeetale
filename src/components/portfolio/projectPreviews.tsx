@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { AspectRatio } from "../ui/aspect-ratio";
+import { ScrollArea } from "../ui/scroll-area";
 
 export const projects: {
   title: string;
@@ -28,24 +30,29 @@ export const projects: {
 
 const ProjectPreviews = () => {
   return (
-    <section className="w-2/3 mx-auto flex flex-col justify-start space-y-4 max-h-[calc(100vh-8rem)] overflow-y-scroll overflow-hidden top-0 grow-0">
-      {projects.map((project) => (
-        <a
-          key={project.title}
-          href={project.href}
-          className="w-full bg-zinc-100 h-fit rounded-3xl relative aspect-video border"
-        >
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-zinc-100 rounded-3xl">
-            <Image
-              src={project.previewImage}
-              fill={true}
-              className="aspect-video min-h-[400px]"
-              alt={`${project.title} preview`}
-            />
-          </div>
-          {project.title}
-        </a>
-      ))}
+    <section className="w-2/3 h-full">
+      <ScrollArea className="h-[calc(100vh-8rem)] w-full">
+        <div className="flex flex-col space-y-6">
+          {projects.map((project) => (
+            <a
+              key={project.title}
+              href={project.href}
+              className="mx-auto w-full border-zinc-100 rounded-2xl relative border-2 overflow-hidden flex flex-col"
+            >
+              <div className="relative w-full">
+                <AspectRatio ratio={16 / 9}>
+                  <Image
+                    src={project.previewImage}
+                    fill={true}
+                    alt={`${project.title} preview`}
+                  />
+                </AspectRatio>
+              </div>
+              <div className="h-max p-4 w-full">{project.title}</div>
+            </a>
+          ))}
+        </div>
+      </ScrollArea>
     </section>
   );
 };
