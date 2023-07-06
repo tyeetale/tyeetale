@@ -17,7 +17,7 @@ const ProjectPreviews = ({ projects }: { projects: Project[] }) => {
               className="w-full border-zinc-100 dark:border-zinc-900 rounded-2xl overflow-hidden relative border-2 flex flex-col text-zinc-300 hover:text-zinc-900 hover:border-zinc-900"
             >
               <div className="relative w-full">
-                <AspectRatio ratio={16 / 9}>
+                <AspectRatio ratio={4 / 3}>
                   <Image
                     src={
                       project.previewImage?.filePath.replace(
