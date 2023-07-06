@@ -1,4 +1,5 @@
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
+import { Project } from "contentlayer/generated";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +22,6 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { Separator } from "../ui/separator";
-import { projects } from "./projectPreviews";
 
 const skillset = [
   "Product Design",
@@ -34,7 +34,7 @@ const skillset = [
   "User Journey",
 ];
 
-const Intro = () => {
+const Intro = ({ projects }: { projects: Project[] }) => {
   const { setTheme } = useTheme();
 
   return (
@@ -56,9 +56,9 @@ const Intro = () => {
                     <ListItem
                       key={project.title}
                       title={project.title}
-                      href={project.href}
+                      href={`/portfolio/${project.slugAsParams}`}
                     >
-                      {project.description}
+                      {project.slogan}
                     </ListItem>
                   ))}
                 </ul>

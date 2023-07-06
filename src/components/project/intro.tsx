@@ -1,12 +1,13 @@
 "use client";
 
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
+import { Project } from "contentlayer/generated";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
-import { HiMoon, HiSun } from "react-icons/hi";
+import { HiArrowLeft, HiMoon, HiSun } from "react-icons/hi";
+import { getAllProjects } from "~/app/portfolio/page";
 import { cn } from "~/utils/cn";
-import { projects } from "../portfolio/projectPreviews";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
@@ -24,19 +25,15 @@ import {
 } from "../ui/navigation-menu";
 import { Separator } from "../ui/separator";
 
-const projectSkillset = [
-  "Product Design",
-  "Analytics",
-  "UI/UX",
-  "Web Dev",
-  "Branding",
-  "Marketing",
-  "Startup Experience",
-  "User Journey",
-];
-
-const ProjectIntro = () => {
+const ProjectIntro = async ({
+  title,
+  slogan,
+  description,
+  badges,
+}: Pick<Project, "title" | "slogan" | "description" | "badges">) => {
   const { setTheme } = useTheme();
+
+  const projects = await getAllProjects();
 
   return (
     <section className="w-1/3 border-zinc-300 relative">
@@ -57,9 +54,9 @@ const ProjectIntro = () => {
                     <ListItem
                       key={project.title}
                       title={project.title}
-                      href={project.href}
+                      href={`/portfolio/${project.slugAsParams}`}
                     >
-                      {project.description}
+                      {project.slogan}
                     </ListItem>
                   ))}
                 </ul>
@@ -90,21 +87,25 @@ const ProjectIntro = () => {
       </header>
 
       <div className="flex flex-col space-y-10 mt-10">
+        <Link href="/portfolio" className="flex space-x-2 items-center">
+          <HiArrowLeft />
+          <span>Return to Portfolio</span>
+        </Link>
         <div>
-          <h1 className="font-bold text-4xl">Project Name</h1>
-          <p className="font-light font-lg">Designer + Developer</p>
+          <h1 className="font-bold text-4xl">{title}</h1>
+          <p className="font-light font-lg">{slogan}</p>
         </div>
 
-        <p className="font-lg flex-wrap">description of the project</p>
+        <p className="font-lg flex-wrap">{description}</p>
 
         <div className="flex flex-wrap">
-          {projectSkillset.map((skill) => (
+          {(badges as string[]).map((badge) => (
             <Badge
               variant="outline"
-              key={skill}
+              key={badge}
               className="text-sm font-light w-fit h-fit m-1"
             >
-              {skill}
+              {badge}
             </Badge>
           ))}
         </div>

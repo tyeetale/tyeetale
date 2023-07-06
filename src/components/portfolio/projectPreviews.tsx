@@ -1,67 +1,30 @@
+import { Project } from "contentlayer/generated";
 import Image from "next/image";
+import Link from "next/link";
 import { HiOutlineEye } from "react-icons/hi";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { ScrollArea } from "../ui/scroll-area";
 
-export const projects: {
-  title: string;
-  href: string;
-  previewImage: string;
-  description: string;
-}[] = [
-  {
-    title: "Tildenn",
-    href: "/portfolio/tildenn",
-    previewImage: "/images/tildenn.png",
-    description: "the flexible travel app",
-  },
-  {
-    title: "Metaphor3d",
-    href: "/portfolio/metaphor3d",
-    previewImage: "/images/metaphor3d.png",
-    description: "ai 3d generated assets",
-  },
-  {
-    title: "GetFibes",
-    href: "/portfolio/getfibes",
-    previewImage: "/images/getfibes.png",
-    description: "influencer affiliate platform",
-  },
-  {
-    title: "Coopsight",
-    href: "/portfolio/coopsight",
-    previewImage: "/images/coopsight.png",
-    description: "startup ecosystem matchmaker",
-  },
-  {
-    title: "NYU Course Search",
-    href: "/portfolio/nyu-course-search",
-    previewImage: "/images/nyu-course-search.png",
-    description: "a better NYU class registrar",
-  },
-  {
-    title: "Deshihou",
-    href: "/portfolio/deshihou",
-    previewImage: "/images/deshihou.png",
-    description: "anime reminder app",
-  },
-];
-
-const ProjectPreviews = () => {
+const ProjectPreviews = ({ projects }: { projects: Project[] }) => {
   return (
-    <section className="w-2/3 h-full flex">
+    <section className="w-2/3 h-full">
       <ScrollArea className="h-[calc(100vh-8rem)] w-full">
         <div className="flex flex-col space-y-6">
           {projects.map((project) => (
-            <a
+            <Link
               key={project.title}
-              href={project.href}
-              className="w-full border-zinc-100 dark:border-zinc-900 rounded-2xl relative border-2 overflow-hidden flex flex-col text-zinc-300 hover:text-zinc-900 hover:border-zinc-900"
+              href={`/portfolio/${project.slugAsParams}`}
+              className="w-full border-zinc-100 dark:border-zinc-900 rounded-2xl overflow-hidden relative border-2 flex flex-col text-zinc-300 hover:text-zinc-900 hover:border-zinc-900"
             >
               <div className="relative w-full">
                 <AspectRatio ratio={16 / 9}>
                   <Image
-                    src={project.previewImage}
+                    src={
+                      project.previewImage?.filePath.replace(
+                        "../../public/",
+                        "/"
+                      ) as string
+                    }
                     fill={true}
                     alt={`${project.title} preview`}
                   />
@@ -74,7 +37,7 @@ const ProjectPreviews = () => {
                   <span className="">View</span>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </ScrollArea>
