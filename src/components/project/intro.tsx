@@ -6,8 +6,9 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import { HiArrowLeft, HiMoon, HiSun } from "react-icons/hi";
-import { getAllProjects } from "~/app/portfolio/page";
+
 import { cn } from "~/utils/cn";
+import { getAllProjects } from "~/utils/getAllProjects";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
