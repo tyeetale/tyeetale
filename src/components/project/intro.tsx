@@ -72,6 +72,7 @@ const ProjectIntro = async ({
 
         <p className="font-lg flex-wrap">{description}</p>
 
+        <Separator />
         <div className="flex flex-wrap">
           {(badges as string[]).map((badge) => (
             <Badge
