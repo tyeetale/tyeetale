@@ -42,7 +42,7 @@ export default async function RootLayout({
       className={[inter.variable, productSans.variable].join(" ")}
     >
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
         </ThemeProvider>
       </body>

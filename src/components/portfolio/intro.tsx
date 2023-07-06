@@ -1,18 +1,9 @@
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { Project } from "contentlayer/generated";
-import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
-import { HiMoon, HiSun } from "react-icons/hi";
 import { cn } from "~/utils/cn";
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -35,8 +26,7 @@ const skillset = [
 ];
 
 const Intro = ({ projects }: { projects: Project[] }) => {
-  const { setTheme } = useTheme();
-
+  // const {setTheme} = useTheme();
   return (
     <section className="w-1/3 border-zinc-300 relative">
       <header className="flex items-center justify-start space-x-4 h-fit">
@@ -66,26 +56,7 @@ const Intro = ({ projects }: { projects: Project[] }) => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-              <HiSun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <HiMoon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme("light")}>
-              Light
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
-              Dark
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("system")}>
-              System
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* <ThemeToggle setTheme={setTheme} /> */}
       </header>
 
       <div className="flex flex-col space-y-10 mt-10">
