@@ -29,9 +29,9 @@ const ProjectIntro = async ({
   const projects = await getAllProjects();
 
   return (
-    <section className="w-1/3 border-zinc-300 relative">
+    <section className="lg:w-1/3 border-zinc-300 relative">
       <header className="flex items-center justify-start space-x-4 h-fit">
-        <Link href="/portfolio" className="mr-2">
+        <Link href="/" className="mr-2">
           tyeetale
         </Link>
 
@@ -47,7 +47,7 @@ const ProjectIntro = async ({
                     <ListItem
                       key={project.title}
                       title={project.title}
-                      href={`/portfolio/${project.slugAsParams}`}
+                      href={`/${project.slugAsParams}`}
                     >
                       {project.slogan}
                     </ListItem>
@@ -61,7 +61,7 @@ const ProjectIntro = async ({
       </header>
 
       <div className="flex flex-col space-y-10 mt-10">
-        <Link href="/portfolio" className="flex space-x-2 items-center">
+        <Link href="/" className="flex space-x-2 items-center">
           <HiArrowLeft />
           <span>Return to Portfolio</span>
         </Link>
@@ -72,7 +72,7 @@ const ProjectIntro = async ({
 
         <p className="font-lg flex-wrap">{description}</p>
 
-        <Separator />
+        <Separator className="hidden lg:block" />
         <div className="flex flex-wrap">
           {(badges as string[]).map((badge) => (
             <Badge
@@ -84,8 +84,33 @@ const ProjectIntro = async ({
             </Badge>
           ))}
         </div>
+        <Separator className="lg:hidden" />
       </div>
-      <div className="absolute bottom-0 left-0 flex justify-center space-x-2">
+      <div className="absolute top-0 right-0 lg:hidden flex justify-center space-x-2">
+        <a
+          className=" p-2 rounded-lg border border-zinc-200"
+          href="mailto:tyeetale@gmail.com?subject=Contact Thomas"
+          target="_blank"
+        >
+          Contact
+        </a>
+        <a
+          className=" p-2 rounded-lg border border-zinc-200"
+          href="https://linktr.ee/tyeetale"
+          target="_blank"
+        >
+          Socials
+        </a>
+        <a
+          className=" p-2 rounded-lg border border-zinc-200"
+          href="https://drive.google.com/file/d/1Hf3BjqRWI9Xhy34pKhb5U8TFt3blG4W-/view?usp=sharing"
+          target="_blank"
+        >
+          Resume
+        </a>
+      </div>
+
+      <div className="absolute hidden lg:bottom-0 lg:left-0 lg:flex justify-center space-x-2">
         <a
           className=" p-2 rounded-lg border border-zinc-200"
           href="mailto:tyeetale@gmail.com?subject=Contact Thomas"

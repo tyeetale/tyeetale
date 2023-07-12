@@ -3,10 +3,14 @@ import { ScrollArea } from "../ui/scroll-area";
 
 const ProjectDetails = ({ code }: { code: string }) => {
   return (
-    <section className="w-2/3 h-full flex">
-      <ScrollArea className="h-[calc(100vh-8rem)] w-full">
+    <section className="lg:w-2/3 lg:h-full lg:flex w-full">
+      <ScrollArea className="lg:h-[calc(100vh-8rem)] hidden lg:block lg:w-full">
         <Mdx code={code} />
       </ScrollArea>
+
+      <div className="lg:hidden mt-8 md:pb-16 w-full">
+        <Mdx code={code} />
+      </div>
     </section>
   );
 };

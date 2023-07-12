@@ -14,7 +14,7 @@ const ProjectPage = async ({ params }: PageProps) => {
 
   return (
     <main className="w-screen h-screen p-8">
-      <div className="w-full h-full rounded-3xl border border-zinc-300 p-8 flex space-x-8">
+      <div className="w-full h-full rounded-3xl lg:border lg:border-zinc-300 lg:p-8 lg:flex lg:space-x-8">
         <ProjectIntro
           title={project.title}
           slogan={project.slogan}
@@ -24,7 +24,7 @@ const ProjectPage = async ({ params }: PageProps) => {
 
         <Separator
           orientation="vertical"
-          className="h-full w-[2px] bg-zinc-300"
+          className="hidden lg:block h-full w-[2px] lg:bg-zinc-300"
         />
 
         <ProjectDetails code={project.body.code} />

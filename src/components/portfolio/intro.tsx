@@ -28,9 +28,9 @@ const skillset = [
 const Intro = ({ projects }: { projects: Project[] }) => {
   // const {setTheme} = useTheme();
   return (
-    <section className="w-1/3 border-zinc-300 relative">
+    <section className="lg:w-1/3 border-zinc-300 relative">
       <header className="flex items-center justify-start space-x-4 h-fit">
-        <Link href="/portfolio" className="mr-2">
+        <Link href="/" className="mr-2">
           tyeetale
         </Link>
 
@@ -46,7 +46,7 @@ const Intro = ({ projects }: { projects: Project[] }) => {
                     <ListItem
                       key={project.title}
                       title={project.title}
-                      href={`/portfolio/${project.slugAsParams}`}
+                      href={`/${project.slugAsParams}`}
                     >
                       {project.slogan}
                     </ListItem>
@@ -88,7 +88,7 @@ const Intro = ({ projects }: { projects: Project[] }) => {
         </div>
         <Separator />
 
-        <div className="flex flex-wrap">
+        <div className="lg:flex lg:flex-wrap hidden">
           {skillset.map((skill) => (
             <Badge
               variant="outline"
@@ -100,7 +100,31 @@ const Intro = ({ projects }: { projects: Project[] }) => {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 flex justify-center space-x-2">
+      <div className="absolute top-0 right-0 lg:hidden flex justify-center space-x-2">
+        <a
+          className=" p-2 rounded-lg border border-zinc-200"
+          href="mailto:tyeetale@gmail.com?subject=Contact Thomas"
+          target="_blank"
+        >
+          Contact
+        </a>
+        <a
+          className=" p-2 rounded-lg border border-zinc-200"
+          href="https://linktr.ee/tyeetale"
+          target="_blank"
+        >
+          Socials
+        </a>
+        <a
+          className=" p-2 rounded-lg border border-zinc-200"
+          href="https://drive.google.com/file/d/1Hf3BjqRWI9Xhy34pKhb5U8TFt3blG4W-/view?usp=sharing"
+          target="_blank"
+        >
+          Resume
+        </a>
+      </div>
+
+      <div className="absolute hidden lg:bottom-0 lg:left-0 lg:flex justify-center space-x-2">
         <a
           className=" p-2 rounded-lg border border-zinc-200"
           href="mailto:tyeetale@gmail.com?subject=Contact Thomas"
