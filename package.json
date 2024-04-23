@@ -1,4 +1,44 @@
 {
   "name": "tyeetale-website",
+  "description": "Tyee's tale on Consistent Output",
+  "version": "2024",
+  "engine": {
+    "npm": "please-use-yarn"
+  },
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start",
+    "prettier:check": "prettier --check \"**/*.{ts,tsx}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
+    "test": "yarn run prettier:check && yarn run lint",
+    "build-stats": "ANALYZE=true yarn build"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.1.7",
+    "lucide-react": "^0.372.0",
+    "next": "14.2.2",
+    "next-themes": "^0.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.1.0",
+    "react-resizable-panels": "^2.0.18",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "eslint": "^9.1.1",
+    "eslint-config-next": "14.2.2",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
+  },
   "packageManager": "yarn@4.1.1"
 }
