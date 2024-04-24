@@ -35,7 +35,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "npm:9.1.1"],\
           ["eslint-config-next", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:14.2.2"],\
           ["framer-motion", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:11.1.7"],\
-          ["lucide-react", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.372.0"],\
+          ["lucide-react", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.373.0"],\
           ["next", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:14.2.2"],\
           ["next-themes", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.3.0"],\
           ["postcss", "npm:8.4.38"],\
@@ -3078,17 +3078,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["lucide-react", [\
-      ["npm:0.372.0", {\
-        "packageLocation": "../../../.yarn/berry/cache/lucide-react-npm-0.372.0-c8f1ab04cc-10c0.zip/node_modules/lucide-react/",\
+      ["npm:0.373.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/lucide-react-npm-0.373.0-fba529ff66-10c0.zip/node_modules/lucide-react/",\
         "packageDependencies": [\
-          ["lucide-react", "npm:0.372.0"]\
+          ["lucide-react", "npm:0.373.0"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.372.0", {\
-        "packageLocation": "./.yarn/__virtual__/lucide-react-virtual-9b3f246b23/4/.yarn/berry/cache/lucide-react-npm-0.372.0-c8f1ab04cc-10c0.zip/node_modules/lucide-react/",\
+      ["virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.373.0", {\
+        "packageLocation": "./.yarn/__virtual__/lucide-react-virtual-370c360783/4/.yarn/berry/cache/lucide-react-npm-0.373.0-fba529ff66-10c0.zip/node_modules/lucide-react/",\
         "packageDependencies": [\
-          ["lucide-react", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.372.0"],\
+          ["lucide-react", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.373.0"],\
           ["@types/react", "npm:18.2.79"],\
           ["react", "npm:18.2.0"]\
         ],\
@@ -4701,7 +4701,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "npm:9.1.1"],\
           ["eslint-config-next", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:14.2.2"],\
           ["framer-motion", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:11.1.7"],\
-          ["lucide-react", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.372.0"],\
+          ["lucide-react", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.373.0"],\
           ["next", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:14.2.2"],\
           ["next-themes", "virtual:85cb8cd4996a7a0dc05fe0ad49d714f03fee251ebea1503625dff4fd0f10d956ad8b0689906e92ad45d82ebdcfbf7f6a10d1d66391e3b37ef3f66c2c3feb0a5a#npm:0.3.0"],\
           ["postcss", "npm:8.4.38"],\
