@@ -12,8 +12,8 @@ export default function DashboardLayout({
   children: ReactNode;
 }>) {
   return (
-    <div className="relative flex min-h-screen h-screen bg-stone-200 dark:bg-neutral-800">
-      <nav className="w-1/5 flex flex-col h-full items-center justify-between p-8">
+    <div className="flex min-h-screen bg-stone-200 dark:bg-neutral-800">
+      <nav className="w-1/5 flex flex-col h-full items-center p-8 fixed top-0 bottom-0 left-0">
         <aside className="flex-col space-y-8 items-center flex">
           <LogoIcon />
           <aside className="text-center space-y-2">
@@ -30,10 +30,12 @@ export default function DashboardLayout({
           </aside>
           <NavSocial className="space-x-1" />
           <NavPages className="flex flex-col space-y-8 w-full" />
+          <div className="mt-auto">
+            <DarkLightToggle />
+          </div>
         </aside>
-        <DarkLightToggle />
       </nav>
-      <main className="w-4/5 h-full p-4">{children}</main>
+      <main className="w-4/5 h-full p-4 ml-auto">{children}</main>
     </div>
   );
 }
