@@ -129,84 +129,131 @@ export default function About() {
             />
           </div>
         </div>
-
-        <div>
-          <h3 className="font-semibold text-xl text-neutral-600 dark:text-neutral-500">
+        <div className="w-full space-y-4">
+          <h3 className="dark:text-white font-semibold text-2xl text-neutral-600">
             Services
           </h3>
-          <ul>
+          <ul className=" grid grid-cols-2 gap-1 overflow-hidden rounded-xl ">
             {services.map((service) => (
-              <li key={service}>{service}</li>
+              <li
+                key={service}
+                className="p-4 bg-neutral-200 dark:bg-neutral-800"
+              >
+                {service}
+              </li>
             ))}
           </ul>
         </div>
-
-        <div>
-          <h3 className="font-semibold text-xl text-neutral-600 dark:text-neutral-500">
+        <div className="w-full space-y-4">
+          <h3 className="dark:text-white font-semibold text-2xl text-neutral-600">
             Libraries & Frameworks
           </h3>
-          <ul>
+          <ul className="grid grid-cols-2 gap-1 overflow-hidden rounded-xl ">
             {libraries_frameworks.map((library) => (
-              <li key={library}>{library}</li>
+              <li
+                key={library}
+                className="p-4 bg-neutral-200 dark:bg-neutral-800"
+              >
+                {library}
+              </li>
             ))}
           </ul>
         </div>
-
-        <div>
-          <h3 className="font-semibold text-xl text-neutral-600 dark:text-neutral-500">
+        <div className="w-full space-y-4">
+          <h3 className="dark:text-white font-semibold text-2xl text-neutral-600">
             Languages
           </h3>
-          <ul>
+          <ul className="grid grid-cols-2 gap-1 overflow-hidden rounded-xl ">
             {languages.map((language) => (
-              <li key={language}>{language}</li>
+              <li
+                key={language}
+                className="p-4 bg-neutral-200 dark:bg-neutral-800"
+              >
+                {language}
+              </li>
             ))}
           </ul>
         </div>
-
-        <div>
-          <h3 className="font-semibold text-xl text-neutral-600 dark:text-neutral-500">
+        <div className="w-full space-y-4">
+          <h3 className="dark:text-white font-semibold text-2xl text-neutral-600">
             Platforms & Tools
           </h3>
-          <ul>
+          <ul className="grid grid-cols-2 gap-1 overflow-hidden rounded-xl">
             {platform_tools.map((tool) => (
-              <li key={tool}>{tool}</li>
+              <li key={tool} className="p-4 bg-neutral-200 dark:bg-neutral-800">
+                {tool}
+              </li>
             ))}
           </ul>
         </div>
-
-        <div>
-          <h3 className="font-semibold text-xl text-neutral-600 dark:text-neutral-500">
+        <div className="w-full space-y-4">
+          <h3 className="dark:text-white font-semibold text-2xl text-neutral-600">
             Experience
           </h3>
-          <ul>
-            {experience.map((exp) => (
-              <li key={exp.timeframe}>
-                {exp.timeframe} - {exp.company} - {exp.title} -{" "}
-                {exp.description}
-              </li>
+          <ul className="flex flex-col space-y-8">
+            {experience.map((exp, idx) => (
+              <>
+                <li
+                  key={exp.company}
+                  className="flex w-full items-start justify-start space-x-4"
+                >
+                  <div className="w-1/3 ">{exp.timeframe}</div>
+                  <div className="w-2/3 flex flex-col space-y-4">
+                    <div className="flex flex-col">
+                      <h4 className="font-semibold">{exp.company}</h4>
+                      <p className="text-neutral-500 font-medium">
+                        {exp.title}
+                      </p>
+                    </div>
+                    <p className="text-neutral-800 dark:text-neutral-400">
+                      {exp.description}
+                    </p>
+                  </div>
+                </li>
+                {idx < experience.length - 1 && <Separator />}
+              </>
             ))}
           </ul>
         </div>
-
-        <div>
-          <h3 className="font-semibold text-xl text-neutral-600 dark:text-neutral-500">
+        <div className="w-full space-y-4">
+          <h3 className="dark:text-white font-semibold text-2xl text-neutral-600">
             Education
           </h3>
-          <ul>
+          <ul className="flex flex-col space-y-8">
             {education.map((edu) => (
-              <li key={edu.timeframe}>
-                {edu.timeframe} - {edu.school} - {edu.degree} -{" "}
-                <ul>
-                  {edu.description.map((desc) => (
-                    <li key={desc}>{desc}</li>
-                  ))}
-                </ul>
-              </li>
+              <>
+                <li className="flex w-full items-start justify-start space-x-4">
+                  <div className="w-1/3">{edu.timeframe}</div>
+                  <div className="w-2/3 flex flex-col space-y-4">
+                    <div className="flex flex-col">
+                      <h4 className="font-semibold">{edu.school}</h4>
+                      <p className="text-neutral-500 font-medium">
+                        {edu.degree}
+                      </p>
+                    </div>
+                    <ul className="list-disc">
+                      {edu.description.map((point) => (
+                        <li className="text-neutral-800 dark:text-neutral-400">
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+                <Separator />
+              </>
             ))}
           </ul>
         </div>
 
-        <Separator />
+        {/* <div className="w-full space-y-4 flex">
+          <Button variant="default" asChild>
+            Download Resume
+          </Button>
+          <Button variant="outline" asChild>
+            See My Daily Reports on Twitter
+          </Button>
+        </div> */}
       </div>
     </main>
   );
