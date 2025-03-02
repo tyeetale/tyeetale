@@ -1,5 +1,7 @@
-# About Me
+🚀 About Me
 
-Hi, I'm Thomas, a designer and developer with over five years of experience. I enjoy building cool things from scratch, whether it's ideas, products, or marketing strategies. I am an extreme generalist focused on adapting and scaling my work across different mediums, infrastructures, and tech stacks.
+Hey, I’m Thomas — an analyst, developer, and extreme generalist with 8+ years of experience in analytics and development. **I’m obsessed with building systems that bridge disciplines, infrastructure, and tech stacks—breaking down complexity, scaling ideas, and turning concepts into reality.**
 
-I'm also an exuberant adventurer, always seeking new experiences and perspectives. I love to chat about food, culture, and tech.
+Right now, I’m helping engineers build rockets @blueorigin, channeling my entrepreneurial mindset into the ultimate “launch”—space exploration.
+
+Beyond work, I’m a relentless adventurer, always chasing new experiences, cultures, and perspectives. If you’re into deep dives on food, innovation, or the future of humanity, let’s connect. 🚀🔥
