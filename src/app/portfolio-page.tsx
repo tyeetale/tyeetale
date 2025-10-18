@@ -1,6 +1,19 @@
-import PageWrapper from "./page-wrapper";
+"use client";
 
-export default PageWrapper;
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import GeometricAbstraction from "~/components/geometric/GeometricAbstraction";
+import OrganicPattern from "~/components/geometric/OrganicPattern";
+import IndustrialGrid from "~/components/layout/IndustrialGrid";
+import FlowingTimeline from "~/components/portfolio/FlowingTimeline";
+import ModularSection from "~/components/layout/ModularSection";
+import { Project } from "contentlayer/generated";
+
+interface PortfolioProps {
+  projects: Project[];
+}
+
+const Portfolio = ({ projects }: PortfolioProps) => {
   const [currentSection, setCurrentSection] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 

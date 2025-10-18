@@ -1,12 +1,22 @@
-import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { ThemeProvider } from "~/components/theme/theme-provider";
 import "../styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const productSans = localFont({
-  src: "../../public/fonts/ProductSans-Bold.ttf",
+  src: [
+    {
+      path: "../../public/fonts/ProductSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/ProductSans-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-productsans",
+  display: "swap",
 });
 
 export const metadata = {
@@ -39,9 +49,9 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={[inter.variable, productSans.variable].join(" ")}
+      className={productSans.variable}
     >
-      <body>
+      <body className="min-h-screen bg-depth-surface text-industrial-900 antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
         </ThemeProvider>
