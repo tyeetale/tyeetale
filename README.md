@@ -1,7 +1,7 @@
 🚀 About Me
 
-Hey there, traveler! I swear I'm not an NPC,and my name is Thomas — an analyst, developer, and cross-functional strategist with 5+ years of experience in analytics and development. **I’m obsessed with building constantly evolving systems by breaking down complexity, scaling ideas, and turning concepts into reality.**
+Hey there, traveler! My name is Thomas, a builder and systems thinker with a background that blends finance, analytics, and engineering. **I’m obsessed with creating evolving systems by breaking down complexity, scaling ideas, and turning concepts into reality.**
 
-Right now, I’m helping engineers with rockets @blueorigin, channeling my entrepreneurial mindset into the ultimate “launch” of all — building a road to space.
+I’ve worn many hats along the way as a founder, designer, and software engineer, and now I’m helping engineers build rockets at Blue Origin, channeling that same curiosity and drive into building humanity’s future in space.
 
 Beyond work, I’m a relentless adventurer, always chasing new experiences, cultures, and perspectives. If you’re into deep dives on food, innovation, or the future of humanity, let’s connect. 🚀🔥
