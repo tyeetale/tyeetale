@@ -1,10 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/lib/theme";
-
-function HomePage() {
-  return <p className="text-foreground">Homepage placeholder</p>;
-}
+import { Home } from "@/pages/Home";
 
 export function App() {
   return (
@@ -12,7 +9,7 @@ export function App() {
       <ThemeProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
