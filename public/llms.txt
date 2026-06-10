@@ -1,0 +1,37 @@
+# Thomas Yee (tyeetale)
+
+## About
+Operator and builder. I build AI systems, data infrastructure, and products.
+Currently helping rockets pencil out at Blue Origin.
+The rest of my time goes to shipping AI that gives people superpowers.
+
+## Current Role
+- Blue Origin — Data Engineer (2024–present)
+- New Glenn Financial Planning & Analysis team
+- Data infrastructure for financial planning, cost-per-flight analysis, and operational forecasting
+
+## Side Projects
+- Onsite (getonsiteai.com) — AI business brain for home renovation contractors. Lead Engineer.
+- Mosslayer (mosslayer.com) — Agentic payments & intent mapping. CEO.
+
+## Past Work
+- Tildenn (2022–2024) — AI travel planner, Founder & Engineer
+- Coopsight (2018–2022) — ML-powered startup ecosystem matching, Software Engineer
+- Metaphor3D — AI-generated 3D mesh assets for game developers
+- Fibes — UGC influencer affiliate platform
+
+## Education
+- NYU Shanghai — BS Finance, Data Analysis (2018–2022)
+- Dual concentration: Business Analytics & Marketing
+- Merit Scholarship
+
+## Skills
+- AI/ML systems, data engineering, full-stack product development
+- Python, TypeScript, React, Next.js, SQL, cloud platforms (GCP, AWS)
+- Product design, systems thinking, startup operations
+
+## Links
+- Site: https://tyeetale.vercel.app
+- GitHub: https://github.com/tyeetale
+- X: https://x.com/tyeetale
+- Email: tyeetale@gmail.com

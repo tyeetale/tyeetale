@@ -3,6 +3,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/lib/theme";
 import { Home } from "@/pages/Home";
 import { Project } from "@/pages/Project";
+import { QR } from "@/pages/QR";
 
 export function App() {
   return (
@@ -12,6 +13,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects/:slug" element={<Project />} />
+            <Route path="/qr" element={<QR />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
