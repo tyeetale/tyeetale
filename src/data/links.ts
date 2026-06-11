@@ -1,6 +1,6 @@
 export const socialLinks = [
   { label: "Email", href: "mailto:tyeetale@gmail.com", icon: "Mail" },
-  { label: "X", href: "https://x.com/tyeetale", icon: "Twitter" },
+  { label: "X", href: "https://x.com/tyeetale", icon: "XIcon" },
   { label: "GitHub", href: "https://github.com/tyeetale", icon: "Github" },
   { label: "LinkedIn", href: "https://linkedin.com/in/tyeetale", icon: "Linkedin" },
 ] as const;
