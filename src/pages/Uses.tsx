@@ -9,13 +9,13 @@ export function Uses() {
     <>
       <Helmet>
         <title>Tools — tyeetale</title>
-        <meta name="description" content="Tools, stack, and interactive widgets." />
+        <meta name="description" content="Interactive tools and widgets." />
       </Helmet>
       <Container>
         <Header />
         <h1 className="font-heading font-bold text-xl text-foreground mb-2">Tools</h1>
         <p className="text-muted-foreground text-sm mb-8">
-          What I build with. Some of these are interactive.
+          Interactive things. Play around.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
@@ -24,53 +24,14 @@ export function Uses() {
             <LiveClock />
           </BentoCard>
 
-          {/* Stack cards */}
-          <BentoCard>
-            <StackCard
-              title="Languages"
-              items={["TypeScript", "Python", "SQL"]}
-            />
-          </BentoCard>
-
-          <BentoCard>
-            <StackCard
-              title="Frameworks"
-              items={["React", "Vite", "TailwindCSS", "FastAPI", "Next.js"]}
-            />
-          </BentoCard>
-
           {/* Interactive color toy */}
           <BentoCard>
             <ColorOrb />
           </BentoCard>
 
-          {/* Infrastructure */}
-          <BentoCard>
-            <StackCard
-              title="Infrastructure"
-              items={["Vercel", "Cloudflare Workers", "Supabase", "GCP", "AWS", "Docker"]}
-            />
-          </BentoCard>
-
           {/* Keystroke counter */}
-          <BentoCard className="sm:col-span-2">
+          <BentoCard>
             <KeystrokeRipple />
-          </BentoCard>
-
-          {/* AI/ML */}
-          <BentoCard>
-            <StackCard
-              title="AI & ML"
-              items={["OpenAI / Claude / Llama", "Workers AI", "LangChain"]}
-            />
-          </BentoCard>
-
-          {/* Editor & Tools */}
-          <BentoCard>
-            <StackCard
-              title="Editor & Tools"
-              items={["Cursor", "Warp", "Git", "Figma", "Linear", "Arc"]}
-            />
           </BentoCard>
 
           {/* Gravity dots toy */}
@@ -89,26 +50,6 @@ function BentoCard({ children, className = "" }: { children: React.ReactNode; cl
   return (
     <div className={`border border-border rounded-xl p-4 bg-surface/50 overflow-hidden ${className}`}>
       {children}
-    </div>
-  );
-}
-
-function StackCard({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div>
-      <h3 className="text-xs font-heading font-semibold uppercase tracking-widest text-foreground mb-3">
-        {title}
-      </h3>
-      <div className="flex flex-wrap gap-1.5">
-        {items.map((item) => (
-          <span
-            key={item}
-            className="text-xs px-2 py-1 rounded-md bg-background border border-border text-muted-foreground"
-          >
-            {item}
-          </span>
-        ))}
-      </div>
     </div>
   );
 }
