@@ -1,75 +1,80 @@
-import { useCallback, useRef, useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft } from "lucide-react";
-import ForceGraph2D from "react-force-graph-2d";
 import { graphData, type GraphNode } from "@/data/graph";
+import { GraphCanvas } from "@/components/graph/GraphCanvas";
+import { NodeSidebar } from "@/components/graph/NodeSidebar";
+import { GraphSearch } from "@/components/graph/GraphSearch";
+import { GraphChat } from "@/components/graph/GraphChat";
 
 export function Graph() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTopics, setActiveTopics] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     function updateDimensions() {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
     }
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const nodeCanvasObject = useCallback(
-    (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
-      const graphNode = node as GraphNode & { x: number; y: number };
-      const label = graphNode.label;
-      const isProject = graphNode.type === "project";
-      const isCurrent = graphNode.current;
-      const radius = isProject ? 6 : 3;
-      const fontSize = isProject ? 12 / globalScale : 9 / globalScale;
+  const highlightNodeIds = useMemo(() => {
+    const hasSearch = searchQuery.trim().length > 0;
+    const hasTopicFilter = activeTopics.size > 0;
+    if (!hasSearch && !hasTopicFilter) return null;
 
-      // Draw node circle
-      ctx.beginPath();
-      ctx.arc(graphNode.x, graphNode.y, radius, 0, 2 * Math.PI);
-
-      if (isCurrent) {
-        ctx.fillStyle = "#4ade80";
-        ctx.shadowColor = "#4ade80";
-        ctx.shadowBlur = 8;
-      } else if (isProject) {
-        ctx.fillStyle = "#e5e5e5";
-        ctx.shadowColor = "#e5e5e5";
-        ctx.shadowBlur = 4;
-      } else {
-        ctx.fillStyle = "#555555";
-        ctx.shadowBlur = 0;
+    const ids = new Set<string>();
+    graphData.nodes.forEach((node) => {
+      let matches = true;
+      if (hasSearch) {
+        matches = node.label.toLowerCase().includes(searchQuery.toLowerCase());
       }
-
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      // Draw label for project nodes always, topic nodes when zoomed in
-      if (isProject || globalScale > 1.5) {
-        ctx.font = `${fontSize}px Geist, sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "top";
-        ctx.fillStyle = isProject ? "#a3a3a3" : "#555555";
-        ctx.fillText(label, graphNode.x, graphNode.y + radius + 2);
+      if (hasTopicFilter && matches) {
+        const isActiveTopic = activeTopics.has(node.label);
+        const nodeTopicIds = Array.from(activeTopics).map(
+          (t) => `topic-${t.toLowerCase().replace(/\s+/g, "-")}`
+        );
+        const isConnectedToActiveTopic = graphData.links.some(
+          (link) =>
+            ((link.source === node.id || (link.source as any)?.id === node.id) &&
+              nodeTopicIds.includes(typeof link.target === "string" ? link.target : (link.target as any)?.id)) ||
+            ((link.target === node.id || (link.target as any)?.id === node.id) &&
+              nodeTopicIds.includes(typeof link.source === "string" ? link.source : (link.source as any)?.id))
+        );
+        matches = isActiveTopic || isConnectedToActiveTopic;
       }
-    },
-    []
-  );
+      if (matches) ids.add(node.id);
+    });
 
-  const linkColor = useCallback((link: any) => {
-    return link.type === "connection"
-      ? "rgba(163, 163, 163, 0.4)"
-      : "rgba(85, 85, 85, 0.2)";
+    return ids.size > 0 ? ids : null;
+  }, [searchQuery, activeTopics]);
+
+  const handleNodeClick = useCallback((node: GraphNode) => {
+    setSelectedNode(node);
   }, []);
 
-  const linkWidth = useCallback((link: any) => {
-    return link.type === "connection" ? 1.5 : 0.5;
+  const handleNodeSelect = useCallback((nodeId: string) => {
+    const node = graphData.nodes.find((n) => n.id === nodeId);
+    if (node) setSelectedNode(node);
+  }, []);
+
+  const handleTopicToggle = useCallback((topic: string) => {
+    setActiveTopics((prev) => {
+      const next = new Set(prev);
+      if (next.has(topic)) next.delete(topic);
+      else next.add(topic);
+      return next;
+    });
+  }, []);
+
+  const handleClearFilters = useCallback(() => {
+    setActiveTopics(new Set());
+    setSearchQuery("");
   }, []);
 
   return (
@@ -78,56 +83,43 @@ export function Graph() {
         <title>Graph — tyeetale</title>
         <meta name="robots" content="noindex" />
       </Helmet>
-
-      {/* Force dark mode on this page */}
-      <div
-        ref={containerRef}
-        className="fixed inset-0 bg-[#0a0a0a]"
-      >
-        {/* Overlay header */}
+      <div className="fixed inset-0 bg-[#0a0a0a]">
         <div className="absolute top-0 left-0 right-0 z-10 p-4 flex items-center justify-between bg-gradient-to-b from-[#0a0a0a] to-transparent">
           <div className="flex items-center gap-4">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-1.5 text-[#a3a3a3] text-sm hover:text-[#e5e5e5] transition-colors"
-            >
+            <Link to="/" className="inline-flex items-center gap-1.5 text-[#a3a3a3] text-sm hover:text-[#e5e5e5] transition-colors">
               <ArrowLeft size={14} />
               back
             </Link>
-            <span className="font-heading font-bold text-sm text-[#e5e5e5] tracking-tight">
-              tyeetale
-            </span>
+            <span className="font-heading font-bold text-sm text-[#e5e5e5] tracking-tight">tyeetale</span>
           </div>
-          <span className="text-[#555555] text-xs">
-            drag to explore
-          </span>
+          <span className="text-[#555555] text-xs">drag to explore</span>
         </div>
 
-        {/* Force graph */}
+        <GraphSearch
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          activeTopics={activeTopics}
+          onTopicToggle={handleTopicToggle}
+          onClearFilters={handleClearFilters}
+        />
+
         {dimensions.width > 0 && (
-          <ForceGraph2D
+          <GraphCanvas
             graphData={graphData}
             width={dimensions.width}
             height={dimensions.height}
-            backgroundColor="#0a0a0a"
-            nodeCanvasObject={nodeCanvasObject}
-            nodePointerAreaPaint={(node: any, color: string, ctx: CanvasRenderingContext2D) => {
-              const radius = (node as GraphNode & { x: number; y: number }).type === "project" ? 6 : 3;
-              ctx.beginPath();
-              ctx.arc(node.x, node.y, radius + 4, 0, 2 * Math.PI);
-              ctx.fillStyle = color;
-              ctx.fill();
-            }}
-            linkColor={linkColor}
-            linkWidth={linkWidth}
-            d3AlphaDecay={0.02}
-            d3VelocityDecay={0.3}
-            cooldownTime={3000}
-            enableZoomInteraction={true}
-            enablePanInteraction={true}
-            enableNodeDrag={true}
+            highlightNodeIds={highlightNodeIds}
+            onNodeClick={handleNodeClick}
           />
         )}
+
+        <NodeSidebar
+          node={selectedNode}
+          onClose={() => setSelectedNode(null)}
+          onNodeSelect={handleNodeSelect}
+        />
+
+        <GraphChat />
       </div>
     </>
   );
