@@ -8,14 +8,19 @@ export function Notes() {
     <>
       <Helmet>
         <title>Notes — tyeetale</title>
-        <meta name="robots" content="noindex" />
+        <meta name="description" content="Thoughts and writing by Thomas Yee." />
       </Helmet>
       <Container>
         <Header />
-        <h1 className="font-heading font-bold text-xl text-foreground mb-2">Notes</h1>
-        <p className="text-muted-foreground text-sm mb-10">
-          Thoughts and writing. Coming soon.
-        </p>
+        <div className="flex-1 flex flex-col justify-center items-center text-center py-20">
+          <h1 className="font-heading font-bold text-xl text-foreground mb-3">Notes</h1>
+          <p className="text-muted-foreground text-sm max-w-[300px]">
+            Thoughts on building, AI, and systems thinking. Writing in progress.
+          </p>
+          <span className="text-muted text-xs mt-6 border border-border px-3 py-1 rounded-full">
+            coming soon
+          </span>
+        </div>
         <Footer />
       </Container>
     </>

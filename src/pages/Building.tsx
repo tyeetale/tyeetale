@@ -2,25 +2,16 @@ import { Helmet } from "react-helmet-async";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 
 export function Building() {
   return (
     <>
       <Helmet>
-        <title>Building — tyeetale</title>
+        <title>About — tyeetale</title>
         <meta name="description" content="How Thomas Yee thinks about building products, systems, and teams." />
       </Helmet>
       <Container>
         <Header />
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1.5 text-muted text-sm hover:text-foreground transition-colors mb-8"
-        >
-          <ArrowLeft size={14} />
-          back
-        </Link>
 
         <h1 className="font-heading font-bold text-xl text-foreground mb-2">Building</h1>
         <p className="text-muted-foreground text-sm mb-10">
