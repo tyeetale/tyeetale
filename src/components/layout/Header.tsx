@@ -32,8 +32,9 @@ export function Header() {
     <header className="flex items-center justify-between pb-4 mb-10 border-b border-border">
       <button
         onClick={handleWordmarkClick}
-        className="font-heading font-bold text-base text-foreground tracking-tight"
+        className="flex items-center gap-2 font-heading font-bold text-base text-foreground tracking-tight"
       >
+        <img src="/profile.png" alt="tyeetale" className="w-6 h-6 rounded-full" />
         tyeetale
       </button>
       <nav className="flex items-center gap-3">

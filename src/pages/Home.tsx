@@ -26,10 +26,12 @@ export function Home() {
       </Helmet>
       <Container>
         <Header />
-        <Intro />
-        <OtherProjects />
-        <Timeline />
-        <PastProjects />
+        <div className="flex-1 flex flex-col justify-center">
+          <Intro />
+          <OtherProjects />
+          <Timeline />
+          <PastProjects />
+        </div>
         <Footer />
       </Container>
     </>
