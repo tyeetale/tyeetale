@@ -35,3 +35,23 @@ The rest of my time goes to shipping AI that gives people superpowers.
 - GitHub: https://github.com/tyeetale
 - X: https://x.com/tyeetale
 - Email: tyeetale@gmail.com
+
+## Site Pages
+- / — Homepage with intro, timeline, projects
+- /building — Principles and current interests
+- /uses — Tools and software stack
+- /graph — Interactive knowledge graph of projects and topics
+- /projects/tildenn — AI travel planner (GPT-3 era)
+- /projects/coopsight — ML startup ecosystem matching
+- /projects/metaphor3d — AI 3D asset generation
+- /projects/fibes — UGC influencer marketplace
+- /qr — QR code for sharing
+- /llms.txt — This file
+
+## Principles
+- Ship, then refine. Working things teach more than perfect plans.
+- Systems over features. Build the system that makes features trivial.
+- AI is an interface problem. Models commoditize, UX differentiates.
+- Data compounds. Infrastructure to learn from your own systems.
+- Cross-discipline advantage. Finance, design, engineering intersect.
+- Intent over action. Map what someone needs before what they asked.

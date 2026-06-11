@@ -1,0 +1,24 @@
+# tyeetale.vercel.app robots.txt
+
+User-agent: *
+Allow: /
+
+# AI crawlers explicitly allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# LLM-readable content
+# See /llms.txt for structured machine-readable profile
+Sitemap: https://tyeetale.vercel.app/sitemap.xml
