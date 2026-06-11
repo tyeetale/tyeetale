@@ -8,19 +8,21 @@ export function Timeline() {
       <h2 className="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-6">
         Timeline
       </h2>
-      <div className="relative pl-6">
+      <div className="relative ml-3">
         {/* Vertical line */}
-        <div className="absolute left-0 top-2 bottom-2 w-px bg-gradient-to-b from-border to-transparent" />
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-border" />
 
         {timeline.map((entry, idx) => (
           <div
             key={idx}
-            className={`relative ${idx < timeline.length - 1 ? "mb-8" : ""}`}
+            className={`relative pl-6 ${idx < timeline.length - 1 ? "pb-8" : ""}`}
           >
-            {/* Dot */}
+            {/* Dot - centered on the line */}
             <div
-              className={`absolute -left-6 top-1.5 w-2 h-2 rounded-full border-2 border-background ${
-                entry.current ? "bg-accent" : "bg-muted"
+              className={`absolute left-0 top-[0.45rem] w-2.5 h-2.5 rounded-full -translate-x-1/2 ${
+                entry.current
+                  ? "bg-accent shadow-[0_0_6px_rgba(74,222,128,0.5)]"
+                  : "bg-muted"
               }`}
             />
 
