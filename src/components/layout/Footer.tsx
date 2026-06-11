@@ -32,6 +32,12 @@ export function Footer() {
       <div className="flex items-center gap-3">
         <HumanMachineToggle />
         <Link
+          to="/graph"
+          className="text-xs text-muted border border-border px-2 py-0.5 rounded hover:text-foreground transition-colors"
+        >
+          graph
+        </Link>
+        <Link
           to="/qr"
           className="text-xs text-muted border border-border px-2 py-0.5 rounded hover:text-foreground transition-colors"
         >
