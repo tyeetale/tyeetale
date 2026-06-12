@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { QRCodeSVG } from "qrcode.react";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
@@ -10,10 +10,12 @@ export function QR() {
 
   return (
     <>
-      <Helmet>
-        <title>QR — tyeetale</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      <SEO
+        title="QR"
+        description="Scan to visit tyeetale.vercel.app"
+        path="/qr"
+        noindex={true}
+      />
       <Container>
         <Header />
         <Link

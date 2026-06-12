@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -7,10 +7,11 @@ import { useState, useEffect, useRef } from "react";
 export function Uses() {
   return (
     <>
-      <Helmet>
-        <title>Tools — tyeetale</title>
-        <meta name="description" content="Interactive tools and widgets." />
-      </Helmet>
+      <SEO
+        title="Tools"
+        description="Interactive tools and widgets by Thomas Yee."
+        path="/tools"
+      />
       <Container>
         <Header />
         <h1 className="font-heading font-bold text-xl text-foreground mb-2">Tools</h1>

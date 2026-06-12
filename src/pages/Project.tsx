@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -64,13 +64,12 @@ export function Project() {
 
   return (
     <>
-      <Helmet>
-        <title>{meta.title} — tyeetale</title>
-        <meta name="description" content={meta.tagline} />
-        <meta property="og:title" content={`${meta.title} — tyeetale`} />
-        <meta property="og:description" content={meta.tagline} />
-        <meta property="og:image" content="/og.png" />
-      </Helmet>
+      <SEO
+        title={meta.title}
+        description={meta.tagline}
+        path={`/projects/${slug}`}
+        type="article"
+      />
       <Container>
         <Header />
         <ProjectDetail

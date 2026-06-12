@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -6,10 +6,12 @@ import { Footer } from "@/components/layout/Footer";
 export function Notes() {
   return (
     <>
-      <Helmet>
-        <title>Notes — tyeetale</title>
-        <meta name="description" content="Thoughts and writing by Thomas Yee." />
-      </Helmet>
+      <SEO
+        title="Notes"
+        description="Thoughts on building, AI, and systems thinking by Thomas Yee."
+        path="/notes"
+        noindex={true}
+      />
       <Container>
         <Header />
         <div className="flex-1 flex flex-col justify-center items-center text-center py-20">

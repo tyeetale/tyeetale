@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -6,10 +6,12 @@ import { Footer } from "@/components/layout/Footer";
 export function Experiments() {
   return (
     <>
-      <Helmet>
-        <title>Experiments — tyeetale</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      <SEO
+        title="Experiments"
+        description="Web experiments and widgets."
+        path="/experiments"
+        noindex={true}
+      />
       <Container>
         <Header />
         <h1 className="font-heading font-bold text-xl text-foreground mb-2">Experiments</h1>

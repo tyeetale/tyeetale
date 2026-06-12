@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -10,20 +10,11 @@ import { PastProjects } from "@/components/home/PastProjects";
 export function Home() {
   return (
     <>
-      <Helmet>
-        <title>Thomas Yee — tyeetale</title>
-        <meta
-          name="description"
-          content="Thomas Yee — operator and builder. AI systems, data infrastructure, and products."
-        />
-        <meta property="og:title" content="Thomas Yee — tyeetale" />
-        <meta
-          property="og:description"
-          content="Operator and builder. AI systems, data infrastructure, and products."
-        />
-        <meta property="og:image" content="/og.png" />
-        <meta property="og:type" content="website" />
-      </Helmet>
+      <SEO
+        title="Thomas Yee — tyeetale"
+        description="Three-time founder, AI product builder, and data engineer. Building AI systems, data infrastructure, and products."
+        path="/"
+      />
       <Container>
         <Header />
         <div className="flex-1 flex flex-col justify-center">

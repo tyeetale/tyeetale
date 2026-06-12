@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { ArrowLeft } from "lucide-react";
 import { graphData, type GraphNode } from "@/data/graph";
 import { GraphCanvas } from "@/components/graph/GraphCanvas";
@@ -79,10 +79,12 @@ export function Graph() {
 
   return (
     <>
-      <Helmet>
-        <title>Graph — tyeetale</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      <SEO
+        title="Graph"
+        description="Interactive knowledge graph of Thomas Yee's projects and topics."
+        path="/graph"
+        noindex={true}
+      />
       <div className="fixed inset-0 bg-[#0a0a0a]">
         <div className="absolute top-0 left-0 right-0 z-10 p-4 flex items-center justify-between bg-gradient-to-b from-[#0a0a0a] to-transparent">
           <div className="flex items-center gap-4">

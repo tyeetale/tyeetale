@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -14,10 +14,11 @@ const projects = [
 export function Projects() {
   return (
     <>
-      <Helmet>
-        <title>Projects — tyeetale</title>
-        <meta name="description" content="Past projects by Thomas Yee." />
-      </Helmet>
+      <SEO
+        title="Projects"
+        description="Past projects by Thomas Yee. AI travel planning, ML startup matching, generative 3D, and UGC marketplaces."
+        path="/projects"
+      />
       <Container>
         <Header />
         <h1 className="font-heading font-bold text-xl text-foreground mb-2">Projects</h1>

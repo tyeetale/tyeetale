@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -6,11 +6,12 @@ import { Footer } from "@/components/layout/Footer";
 export function UsesSecret() {
   return (
     <>
-      <Helmet>
-        <title>Uses — tyeetale</title>
-        <meta name="robots" content="noindex" />
-        <meta name="description" content="What Thomas Yee uses to build." />
-      </Helmet>
+      <SEO
+        title="Uses"
+        description="What Thomas Yee uses to build."
+        path="/uses"
+        noindex={true}
+      />
       <Container>
         <Header />
 

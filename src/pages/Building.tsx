@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -6,10 +6,11 @@ import { Footer } from "@/components/layout/Footer";
 export function Building() {
   return (
     <>
-      <Helmet>
-        <title>About — tyeetale</title>
-        <meta name="description" content="How Thomas Yee thinks about building products, systems, and teams." />
-      </Helmet>
+      <SEO
+        title="About"
+        description="How Thomas Yee thinks about building products, systems, and teams. Principles and current interests."
+        path="/about"
+      />
       <Container>
         <Header />
 
