@@ -9,26 +9,28 @@
 - Name: Thomas Yee
 - Handle: tyeetale
 - Location: United States
-- Archetype: Operator, builder, cross-functional product engineer
+- Archetype: Three-time founder, AI product builder, and data engineer behind a multi-billion-dollar rocket program
 - Tagline: Consistent output + improvement
+- Summary: Built recommendation systems before transformers were mainstream, launched an AI travel planner before agentic workflows became popular, and now builds agents that reason and act on behalf of users.
 
 ## Current Role
 
-- Blue Origin — Data Engineer (August 2024–present)
-- New Glenn Financial Planning & Analysis team
-- Building data infrastructure that stitches disparate financial data sources into cohesive analysis
-- Net cash position modeling, cost-per-flight analysis, operational month-over-month forecasting
-- Specializing in AI at scale within enterprise data systems
+- Blue Origin — Financial Data Engineer, FP&A New Glenn (August 2024–present)
+- Constructs the ~$5.4B New Glenn Annual Operating Plan across 12 rocket subsystems
+- Reduced 30+ hours/month of reporting effort by architecting a Databricks-based data system with 10+ ETL workflows
+- Increased financial ownership across 320+ budget owners with self-serve metrics and automated monthly reporting
+- Surfaced $200M+ in stale purchase orders across 1,000+ suppliers via Non-Labor KPI suite
+- Won Blue Origin's corporate AI hackathon (20+ teams) by building an AI agent using MCP servers and RAG pipelines over enterprise knowledge (Databricks, GitLab, SharePoint, Jira)
 
 ## Side Projects (Active)
 
-- Onsite (https://getonsiteai.com) — AI business brain for home renovation contractors. Lead Engineer. Replacing traditional ERP with an AI system that acts as the company brain.
-- Mosslayer (https://mosslayer.com) — Agentic payments & intent mapping. CEO. Figuring out how agents help you financially through fulfillment and intent mapping.
+- Mosslayer (https://mosslayer.com) — Co-Founder (Apr 2025–present). One of the first consumer-facing agentic payment platforms. AI evaluates financial context, recommends actions, and executes purchases autonomously over crypto rails. Reached $5K GMV in first month. Owns product strategy and agent architecture from zero to production.
+- Onsite (https://getonsiteai.com) — Founder (Apr 2025–present). AI-powered company brains for home renovation contractors. Reduces time managing bids, invoices, projects, and customer relationships. Onboarded 5 contractors in beta. Built from 10+ contractor interviews.
 
 ## Past Work
 
-- Tildenn (2022–2024) — One of the earliest AI travel planners. Built during GPT-3 era, before ChatGPT. Solo founder. Hybrid system: GPT-3 + hierarchical clustering + haversine distance + rule engines. 100 DAU. Next.js, MongoDB, Lambda.
-- Coopsight (2019–2021) — ML-powered startup ecosystem matching. 500 startups signed up. Sberbank partnership in talks. Tinder-like UX for startup partnerships. OCR + keyword extraction + compatibility scoring. COO & technical cofounder.
+- Tildenn (Jan 2022–Aug 2024) — Founder. One of the earliest AI travel planners. Collapsed trip planning from 2 days to under 30 minutes for 100+ customers. Shipped 10+ major product iterations in 6 months from 50+ user feedback sessions. Secured $15K+ in non-dilutive funding through NYU's Entrepreneurial Accelerator Program. Hybrid system: GPT-3 + hierarchical clustering + haversine distance + rule engines. Next.js, MongoDB, Lambda.
+- Coopsight (Oct 2019–Dec 2021) — Co-Founder/COO. ML matchmaking engine (word2vec, Jaccard similarity, TesseractOCR) generating 100+ M&A and partnership opportunities per fund across 10 VC portfolios. Onboarded 250+ startups. Closed partnership with Sberbank, Russia's largest bank. Directed cross-functional team of 9. React, Node, Firebase, Kubernetes, GCP.
 - Metaphor3D (2021–2022) — Text-to-3D asset generation. Three.js web viewer. Pre-Stable Diffusion era exploration of generative AI beyond text.
 - Fibes (2020–2021) — UGC influencer marketplace. Loyalty-driven model where creators earn products instead of cash. Incentive design exploration.
 
@@ -65,11 +67,10 @@ Finance/data analysis (NYU Shanghai) → ML-driven products (Coopsight) → Gene
 
 ## Technical Skills
 
-- Languages: TypeScript, Python, SQL (PostgreSQL, BigQuery)
-- Frameworks: React, Next.js, Vite, TailwindCSS, FastAPI, React Native
-- Infrastructure: Vercel, Cloudflare Workers, Supabase, GCP, AWS, Docker
-- AI/ML: OpenAI, Claude, Llama, Workers AI, LangChain, hierarchical clustering, haversine distance, context engineering
-- Tools: Cursor, Warp, Git, Figma, Linear, Arc
+- AI: LLM agents, agent evaluation frameworks, MCP servers, Amazon Bedrock, RAG, prompt engineering, OCR pipelines, vector search, word2vec, retrieval systems, context engineering
+- Engineering: Python, SQL, TypeScript, React, Next.js, Node.js, Databricks, ETL pipelines, AWS, GCP, MongoDB, Kubernetes, Cloudflare Workers, Supabase, Docker
+- Product: User research, roadmapping, monetization experiments, Agile, Jira, Figma, forecasting, unit economics
+- Tools: Cursor, Warp, Git, Linear, Arc, Vite, TailwindCSS
 
 ## Links
 
