@@ -1,57 +1,117 @@
 # Thomas Yee (tyeetale)
 
-## About
-Operator and builder. I build AI systems, data infrastructure, and products.
-Currently helping rockets pencil out at Blue Origin.
-The rest of my time goes to shipping AI that gives people superpowers.
+> Operator and builder. AI systems, data infrastructure, and products.
+> Currently helping rockets pencil out at Blue Origin.
+> The rest of my time goes to shipping AI that gives people superpowers.
+
+## Identity
+
+- Name: Thomas Yee
+- Handle: tyeetale
+- Location: United States
+- Archetype: Operator, builder, cross-functional product engineer
+- Tagline: Consistent output + improvement
 
 ## Current Role
-- Blue Origin — Data Engineer (2024–present)
-- New Glenn Financial Planning & Analysis team
-- Data infrastructure for financial planning, cost-per-flight analysis, and operational forecasting
 
-## Side Projects
-- Onsite (getonsiteai.com) — AI business brain for home renovation contractors. Lead Engineer.
-- Mosslayer (mosslayer.com) — Agentic payments & intent mapping. CEO.
+- Blue Origin — Data Engineer (August 2024–present)
+- New Glenn Financial Planning & Analysis team
+- Building data infrastructure that stitches disparate financial data sources into cohesive analysis
+- Net cash position modeling, cost-per-flight analysis, operational month-over-month forecasting
+- Specializing in AI at scale within enterprise data systems
+
+## Side Projects (Active)
+
+- Onsite (https://getonsiteai.com) — AI business brain for home renovation contractors. Lead Engineer. Replacing traditional ERP with an AI system that acts as the company brain.
+- Mosslayer (https://mosslayer.com) — Agentic payments & intent mapping. CEO. Figuring out how agents help you financially through fulfillment and intent mapping.
 
 ## Past Work
-- Tildenn (2022–2024) — AI travel planner, Founder & Engineer
-- Coopsight (2018–2022) — ML-powered startup ecosystem matching, Software Engineer
-- Metaphor3D — AI-generated 3D mesh assets for game developers
-- Fibes — UGC influencer affiliate platform
+
+- Tildenn (2022–2024) — One of the earliest AI travel planners. Built during GPT-3 era, before ChatGPT. Solo founder. Hybrid system: GPT-3 + hierarchical clustering + haversine distance + rule engines. 100 DAU. Next.js, MongoDB, Lambda.
+- Coopsight (2019–2021) — ML-powered startup ecosystem matching. 500 startups signed up. Sberbank partnership in talks. Tinder-like UX for startup partnerships. OCR + keyword extraction + compatibility scoring. COO & technical cofounder.
+- Metaphor3D (2021–2022) — Text-to-3D asset generation. Three.js web viewer. Pre-Stable Diffusion era exploration of generative AI beyond text.
+- Fibes (2020–2021) — UGC influencer marketplace. Loyalty-driven model where creators earn products instead of cash. Incentive design exploration.
 
 ## Education
-- NYU Shanghai — BS Finance, Data Analysis (2018–2022)
+
+- NYU Shanghai (https://shanghai.nyu.edu) — BS Finance, Data Analysis (2018–2022)
+- Sino-US research university designed to produce global citizens
 - Dual concentration: Business Analytics & Marketing
 - Merit Scholarship
+- 22+ countries by graduation
 
-## Skills
-- AI/ML systems, data engineering, full-stack product development
-- Python, TypeScript, React, Next.js, SQL, cloud platforms (GCP, AWS)
-- Product design, systems thinking, startup operations
+## Career Arc
 
-## Links
-- Site: https://tyeetale.vercel.app
-- GitHub: https://github.com/tyeetale
-- X: https://x.com/tyeetale
-- Email: tyeetale@gmail.com
-
-## Site Pages
-- / — Homepage with intro, timeline, projects
-- /building — Principles and current interests
-- /uses — Tools and software stack
-- /graph — Interactive knowledge graph of projects and topics
-- /projects/tildenn — AI travel planner (GPT-3 era)
-- /projects/coopsight — ML startup ecosystem matching
-- /projects/metaphor3d — AI 3D asset generation
-- /projects/fibes — UGC influencer marketplace
-- /qr — QR code for sharing
-- /llms.txt — This file
+Finance/data analysis (NYU Shanghai) → ML-driven products (Coopsight) → Generative AI exploration (Metaphor3D) → Solo AI product builder (Tildenn) → Data infrastructure at scale (Blue Origin) → AI products combining all learnings (Onsite, Mosslayer)
 
 ## Principles
+
 - Ship, then refine. Working things teach more than perfect plans.
 - Systems over features. Build the system that makes features trivial.
 - AI is an interface problem. Models commoditize, UX differentiates.
-- Data compounds. Infrastructure to learn from your own systems.
-- Cross-discipline advantage. Finance, design, engineering intersect.
-- Intent over action. Map what someone needs before what they asked.
+- Data compounds. Every pipeline, connection, and pattern captured compounds over time.
+- Cross-discipline advantage. Finance, design, and engineering intersect to produce better products.
+- Intent over action. Map what someone needs before what they asked for.
+- Consistent output. Show up every day and build. The compounding is in the consistency.
+- Use the right tool at the right time. Transformers for language. Classical ML for clustering. Rule engines for constraints.
+
+## Currently Exploring
+
+- Agentic systems: how to build AI agents that reliably act on behalf of users
+- Intent mapping: going from "what the user said" to "what they need" to "what action to take"
+- Data infrastructure at human scale: surfacing insights at the moment they matter
+- AI-native UX patterns: interaction beyond forms and buttons
+- Cost of intelligence: architecting systems where the right model runs at the right time for the right cost
+
+## Technical Skills
+
+- Languages: TypeScript, Python, SQL (PostgreSQL, BigQuery)
+- Frameworks: React, Next.js, Vite, TailwindCSS, FastAPI, React Native
+- Infrastructure: Vercel, Cloudflare Workers, Supabase, GCP, AWS, Docker
+- AI/ML: OpenAI, Claude, Llama, Workers AI, LangChain, hierarchical clustering, haversine distance, context engineering
+- Tools: Cursor, Warp, Git, Figma, Linear, Arc
+
+## Links
+
+- Site: https://tyeetale.vercel.app
+- GitHub: https://github.com/tyeetale
+- X: https://x.com/tyeetale
+- LinkedIn: https://linkedin.com/in/tyeetyee
+- Email: tyeetale@gmail.com
+
+## Site Pages
+
+- / — Homepage with intro, timeline, projects
+- /about — Principles and current interests
+- /projects — Project listing
+- /projects/tildenn — AI travel planner case study
+- /projects/coopsight — Startup ecosystem matchmaker case study
+- /projects/metaphor3d — AI 3D asset generation
+- /projects/fibes — UGC influencer marketplace
+- /tools — Interactive widgets and experiments
+- /graph — Force-directed knowledge graph connecting projects and topics
+- /qr — QR code for sharing
+- /llms.txt — This file (machine-readable profile)
+
+## Project Connections (Knowledge Graph)
+
+- Tildenn connects to: Coopsight (same founder, travel → data)
+- Coopsight connects to: Fibes (same team, pivoted from partnerships to content)
+- Metaphor3D connects to: Tildenn (generative AI exploration → AI product)
+- Fibes connects to: Coopsight (same team), Mosslayer (incentive design → agent payments)
+- Onsite connects to: Blue Origin (AI at scale), Tildenn (AI product building)
+- Mosslayer connects to: Fibes (intent mapping), Onsite (AI products)
+- Blue Origin connects to: NYU Shanghai (finance → data infrastructure)
+- NYU Shanghai connects to: Coopsight (founded during studies)
+
+## Topics
+
+AI, Data, ML, Product Design, Travel, Consumer, Startups, Generative AI, 3D, Marketing, Finance, Payments
+
+## Meta
+
+- This file follows the llms.txt convention for AI discoverability
+- Last updated: 2025-06-12
+- Site built with: Vite, React, TypeScript, TailwindCSS, MDX
+- AI chat available at /graph (powered by Cloudflare Workers AI)
+- Graph visualization shows project/topic connections interactively
