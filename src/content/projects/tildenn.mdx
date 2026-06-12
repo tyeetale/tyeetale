@@ -17,58 +17,40 @@ connections:
 
 ![Tildenn Preview](/assets/tildenn/preview.png)
 
-## Founder-Market Fit
+**Solo-built AI travel planner using GPT-3, hierarchical clustering, and custom rule engines. 100 DAU. One of the earliest AI consumer products in the travel space (2022).**
 
-I'd just graduated from NYU Shanghai — a university that by definition required crossing borders. By 22, I'd been to over 22 countries. I was living in Thailand, one of the world's travel epicenters, running one of the largest travel communities online as an admin of Discord Travelers, and obsessively documenting places as a Level 7 Google Maps contributor. Travel wasn't a market I was entering — it was a life I was already living.
+In 2022, I built one of the earliest AI travel planners. [GPT-3 had just opened to developers](https://openai.com/blog/gpt-3-apps), [global travel was exploding back](https://www.unwto.org/tourism-data/global-and-regional-tourism-performance) post-COVID, and I was living in Thailand watching both happen in real time.
 
-Growing up, I was always drawn to products that used technology to navigate the physical world. Foursquare's check-ins, Ingress's geofencing, Pokemon Go's AR layer — systems that bridged digital intelligence with real places. I wanted to build something in that lineage: technology that makes the physical world more explorable.
+The problem was personal. I'd been to 22+ countries by graduation and planned every single trip the hard way. Spreadsheets, 10 browser tabs, hours of Googling. One person always does all the work while everyone else just shows up. After 50+ interviews with other travelers, I confirmed it wasn't just me.
 
 ![Tildenn 1](/assets/tildenn/1.png)
 
-## Context (2022)
+But here's what made it interesting technically: GPT-3 couldn't actually plan a trip. It hallucinated places, invented addresses, had no concept of distance or timing. You couldn't just wrap the model in a UI and ship it. So the real question became: how do you build a system that's smarter than the model it's built on?
 
-In early 2022, [global travel was surging back](https://www.unwto.org/tourism-data/global-and-regional-tourism-performance) post-COVID. Borders were reopening, revenge travel was trending. Simultaneously, OpenAI had opened [GPT-3 to developers](https://openai.com/blog/gpt-3-apps) — hundreds of apps were building on the API, but almost none were tackling consumer travel. The timing was right: a problem I'd felt my entire life finally had a technical surface area I could build on.
-
-## Problem & Insight
-
-After conducting 50+ interviews with travelers, a pattern emerged. People planned trips in shared spreadsheets — one person doing hours of research, Googling restaurants, cross-referencing distances, building day-by-day schedules by hand. The tools available were either too rigid (packaged tours) or too scattered (10 browser tabs of half-formed research). There was no intelligent system that could handle the research burden while keeping the planner in control.
-
-The target user was specific: the traveler who wants to spend every waking minute immersed in culture, exploring rapidly, doing as much as possible. Not the resort lounger — the hyper-adventurer who needs a system as ambitious as they are.
+I'd always been drawn to products that bridge digital intelligence with real places. Foursquare, Ingress, Pokemon Go. That lineage. And as an admin of Discord Travelers and a Level 7 Google Maps contributor, I had both the community and the obsession to try.
 
 ![Tildenn 2](/assets/tildenn/2.png)
 
-## System Design
+The system I built was hybrid by design. GPT-3 handled natural language input and ideation, but the actual itinerary logic ran through a decision-making ruleset I built independently of the LLM. Hierarchical clustering with haversine distance grouped activities by proximity. Type-aware rules prevented back-to-back restaurants and balanced categories across days. Every suggestion got validated against Google Places API and Mapbox to confirm the place exists, is open, and is reachable.
 
-GPT-3 in 2022 could not generate trustworthy suggestions. It hallucinated places, invented addresses, and had no concept of travel logistics. You couldn't just wrap a transformer and ship it. This was before MCP, before RAG, before skills or context engineering frameworks existed. I was solving the problem of grounding AI in real-world data from scratch.
+That last part was harder than it sounds. Places API gives you raw data, not relevance. Ask it for "interesting things near Shibuya" and you might get a gas station. I had to engineer queries that returned culturally relevant, non-generic results. This was context engineering before anyone called it that. Before MCP, before RAG, before any of the frameworks we have now.
 
-The core challenge was turning "place data" — the richest, most contextual type of information — into actionable, pre-planned itineraries. Not just one event, but a full agenda of balanced activities with timing, proximity, and variety constraints. Like applying Dijkstra's algorithm to lived experience.
+The algorithm ran on Lambda functions. The main app was Next.js with MongoDB. The key insight was simple: use the right tool at the right time. Transformers for language. Classical ML for spatial clustering. Rule engines for constraints. The AI wasn't the product. The system was.
 
-I built a hybrid system:
-- **GPT-3** handled natural language input and initial ideation
-- **A custom decision-making ruleset** (independent of the LLM) handled the actual itinerary logic
-- **Hierarchical clustering with haversine distance** grouped activities by proximity
-- **Type-aware rules** ensured variety — no back-to-back restaurants, balanced categories across days, realistic timing between locations
-
-Every suggestion was validated against Google Places API and Mapbox for ground truth. But Places API doesn't do contextual suggestion mapping — it gives you raw data, not relevance. I had to brute-force the right results by engineering queries that returned culturally relevant, non-generic places. This was context engineering before the concept had a name.
-
-The algorithm ran on AWS Lambda functions. The main app was Next.js with MongoDB for the database, auth, and API orchestration.
-
-The key insight: use the right tool at the right time. Transformers for language understanding. Classical ML for spatial clustering. Rule engines for logical constraints. The AI wasn't the product — the system was.
+> You can't ship a transformer as a product. You ship the system around it that makes the output trustworthy.
 
 ![Tildenn 3](/assets/tildenn/3.png)
 
-## Product & Design
+The product itself had three synchronized views I built from scratch: a calendar, a map, and an agenda. All in sync. Drag something on the calendar and it moves on the map. The AI re-optimizes around your changes. The design philosophy was that the system does the heavy lifting but the human stays in control.
 
-The differentiator was how users interacted with the output. I built three synchronized views from scratch: a custom calendar, a map with clustered pins, and a day-by-day agenda. Users could see their trip across all three dimensions simultaneously — drag an activity on the calendar and watch it move on the map. The AI re-optimized around manual changes.
-
-Multiple product iterations were prototyped and discarded before landing on this multi-view model that worked across desktop and mobile. The design philosophy: the system does the heavy lifting, the human stays in control.
+This took many iterations. The target user was specific: not the resort lounger, but the hyper-adventurer who wants to spend every waking minute immersed in culture. The person who needs a system as ambitious as they are.
 
 ![Tildenn 4](/assets/tildenn/4.png)
 
-## Outcome
+I built the whole thing solo over two years from Thailand. No team, no funding. It reached about 100 daily active users. People loved the experience, but the business model never clicked. Affiliate monetization couldn't sustain growth and direct charging was a hard sell when people are conditioned to plan trips for free.
 
-Solo-built over two years as an indie developer in Thailand. Reached ~100 DAU. The product worked — users loved the planning experience. But the business model didn't pencil: content/affiliate monetization couldn't sustain growth, and direct charging for trip planning was a hard sell in a market conditioned to free tools.
+I sunset it to pursue Blue Origin. But the 0-to-1 of doing user research, system architecture, ML pipelines, product design, and growth as one person? That's the foundation everything after was built on.
 
-I made the call to sunset Tildenn and pursue a larger opportunity at Blue Origin. As a solo 0-to-1 build — user research, system architecture, ML pipeline, product design, growth, all one person — it became the foundation everything after was built on.
+> The hardest part of a solo build isn't the code. It's making every decision yourself and living with all of them.
 
 ![Tildenn 5](/assets/tildenn/5.png)
