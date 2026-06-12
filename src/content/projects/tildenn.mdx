@@ -27,11 +27,11 @@ The problem was personal. I'd been to 22+ countries by graduation and planned ev
 
 But here's what made it interesting technically: GPT-3 couldn't actually plan a trip. It hallucinated places, invented addresses, had no concept of distance or timing. You couldn't just wrap the model in a UI and ship it. So the real question became: how do you build a system that's smarter than the model it's built on?
 
-I'd always been drawn to products that bridge digital intelligence with real places. Foursquare, Ingress, Pokemon Go. That lineage. And as an admin of Discord Travelers and a Level 7 Google Maps contributor, I had both the community and the obsession to try.
+I'd always been drawn to products that bridge digital intelligence with real places. [Foursquare](https://foursquare.com), [Ingress](https://www.ingress.com), [Pokemon Go](https://pokemongolive.com). That lineage. And as an admin of [Discord Travelers](https://discord.gg/travel) and a [Level 7 Google Maps Local Guide](https://maps.google.com/localguides), I had both the community and the obsession to try.
 
 ![Tildenn 2](/assets/tildenn/2.png)
 
-The system I built was hybrid by design. GPT-3 handled natural language input and ideation, but the actual itinerary logic ran through a decision-making ruleset I built independently of the LLM. Hierarchical clustering with haversine distance grouped activities by proximity. Type-aware rules prevented back-to-back restaurants and balanced categories across days. Every suggestion got validated against Google Places API and Mapbox to confirm the place exists, is open, and is reachable.
+The system I built was hybrid by design. GPT-3 handled natural language input and ideation, but the actual itinerary logic ran through a decision-making ruleset I built independently of the LLM. [Hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering) with [haversine distance](https://en.wikipedia.org/wiki/Haversine_formula) grouped activities by proximity. Type-aware rules prevented back-to-back restaurants and balanced categories across days. Every suggestion got validated against Google Places API and Mapbox to confirm the place exists, is open, and is reachable.
 
 That last part was harder than it sounds. Places API gives you raw data, not relevance. Ask it for "interesting things near Shibuya" and you might get a gas station. I had to engineer queries that returned culturally relevant, non-generic results. This was context engineering before anyone called it that. Before MCP, before RAG, before any of the frameworks we have now.
 

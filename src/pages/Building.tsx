@@ -13,7 +13,7 @@ export function Building() {
       <Container>
         <Header />
 
-        <h1 className="font-heading font-bold text-xl text-foreground mb-2">Building</h1>
+        <h1 className="font-heading font-bold text-xl text-foreground mb-2">About</h1>
         <p className="text-muted-foreground text-sm mb-10">
           How I think about making things. Principles that stay, interests that evolve.
         </p>
@@ -38,7 +38,7 @@ export function Building() {
             />
             <Principle
               title="Data compounds"
-              body="Every data pipeline you build, every connection you surface, every pattern you capture — it compounds. Build the infrastructure to learn from your own systems."
+              body="Every data pipeline you build, every connection you surface, every pattern you capture. It compounds. Build the infrastructure to learn from your own systems."
             />
             <Principle
               title="Cross-discipline advantage"

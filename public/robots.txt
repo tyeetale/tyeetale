@@ -21,4 +21,3 @@ Allow: /
 
 # LLM-readable content
 # See /llms.txt for structured machine-readable profile
-Sitemap: https://tyeetale.vercel.app/sitemap.xml
