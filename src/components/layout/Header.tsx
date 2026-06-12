@@ -14,6 +14,9 @@ export function Header() {
       navigate("/experiments");
       return;
     }
+    if (clickCountRef.current === 1) {
+      navigate("/");
+    }
     if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
     clickTimerRef.current = setTimeout(() => {
       clickCountRef.current = 0;
@@ -21,7 +24,6 @@ export function Header() {
   }, [navigate]);
 
   const navLinks = [
-    { label: "home", to: "/" },
     { label: "about", to: "/about" },
     { label: "projects", to: "/projects" },
     { label: "notes", to: "/notes" },
