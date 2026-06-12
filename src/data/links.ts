@@ -2,7 +2,7 @@ export const socialLinks = [
   { label: "Email", href: "mailto:tyeetale@gmail.com", icon: "Mail" },
   { label: "X", href: "https://x.com/tyeetale", icon: "XIcon" },
   { label: "GitHub", href: "https://github.com/tyeetale", icon: "Github" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/tyeetale", icon: "Linkedin" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/tyeetyee", icon: "Linkedin" },
 ] as const;
 
 export const externalLinks = {
