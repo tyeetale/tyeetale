@@ -35,6 +35,8 @@ The system I built was hybrid by design. GPT-3 handled natural language input an
 
 That last part was harder than it sounds. Places API gives you raw data, not relevance. Ask it for "interesting things near Shibuya" and you might get a gas station. I had to engineer queries that returned culturally relevant, non-generic results. This was context engineering before anyone called it that. Before MCP, before RAG, before any of the frameworks we have now.
 
+And then there were timezones. You wouldn't expect something as fundamental as "when is this place open" to be one of the hardest problems, but dealing with dates across locales is genuinely painful. The [ISO 8601 standard](https://en.wikipedia.org/wiki/ISO_8601) is convoluted, and when you're building a travel product that spans multiple countries and timezones, every assumption breaks. [date-fns](https://date-fns.org/) saved me repeatedly, but I still found myself fixing timezone bugs when I least expected them. Localization and internationalization aren't afterthoughts in a travel product. They're the product.
+
 The algorithm ran on Lambda functions. The main app was Next.js with MongoDB. The key insight was simple: use the right tool at the right time. Transformers for language. Classical ML for spatial clustering. Rule engines for constraints. The AI wasn't the product. The system was.
 
 > You can't ship a transformer as a product. You ship the system around it that makes the output trustworthy.

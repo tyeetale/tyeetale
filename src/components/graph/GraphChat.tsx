@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 
-const CHAT_API_URL = "https://graph-chat.tyeetale.workers.dev/chat";
+const CHAT_API_URL = "https://graph-chat.thomasyee28.workers.dev/chat";
 
 export function GraphChat() {
   const [isOpen, setIsOpen] = useState(false);
