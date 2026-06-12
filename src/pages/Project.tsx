@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ProjectDetail } from "@/components/project/ProjectDetail";
+import { ProjectNav } from "@/components/project/ProjectNav";
 import { lazy, Suspense } from "react";
 
 const projects = {
@@ -12,6 +13,8 @@ const projects = {
   metaphor3d: lazy(() => import("@/content/projects/metaphor3d.mdx")),
   fibes: lazy(() => import("@/content/projects/fibes.mdx")),
 } as Record<string, React.LazyExoticComponent<React.ComponentType<any>>>;
+
+const projectOrder = ["tildenn", "coopsight", "metaphor3d", "fibes"];
 
 const projectMeta: Record<
   string,
@@ -55,6 +58,10 @@ export function Project() {
   const MDXContent = projects[slug];
   const meta = projectMeta[slug];
 
+  const currentIndex = projectOrder.indexOf(slug);
+  const prevSlug = currentIndex > 0 ? projectOrder[currentIndex - 1] : null;
+  const nextSlug = currentIndex < projectOrder.length - 1 ? projectOrder[currentIndex + 1] : null;
+
   return (
     <>
       <Helmet>
@@ -75,6 +82,10 @@ export function Project() {
             <MDXContent />
           </Suspense>
         </ProjectDetail>
+        <ProjectNav
+          prev={prevSlug ? { slug: prevSlug, title: projectMeta[prevSlug].title } : null}
+          next={nextSlug ? { slug: nextSlug, title: projectMeta[nextSlug].title } : null}
+        />
         <Footer />
       </Container>
     </>
