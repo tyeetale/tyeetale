@@ -43,7 +43,7 @@ export function ProjectDetail({
         </div>
       )}
 
-      <article className="prose prose-neutral dark:prose-invert prose-sm max-w-none [&_img]:rounded-lg [&_img]:border [&_img]:border-border [&>p:first-of-type>strong]:text-foreground [&>p:first-of-type>strong]:text-base [&>p:first-of-type>strong]:leading-relaxed [&>p:first-of-type>strong]:block [&>p:first-of-type>strong]:mb-6 [&>p:first-of-type>strong]:font-medium [&_blockquote]:border-l-2 [&_blockquote]:border-accent [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground">
+      <article className="prose prose-neutral dark:prose-invert prose-sm max-w-none [&_img]:rounded-lg [&_img]:border [&_img]:border-border [&_img]:w-full [&_img]:aspect-video [&_img]:object-cover [&_img]:bg-surface [&>p:first-of-type>strong]:text-foreground [&>p:first-of-type>strong]:text-base [&>p:first-of-type>strong]:leading-relaxed [&>p:first-of-type>strong]:block [&>p:first-of-type>strong]:mb-6 [&>p:first-of-type>strong]:font-medium [&_blockquote]:border-l-2 [&_blockquote]:border-accent [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground">
         {children}
       </article>
     </div>

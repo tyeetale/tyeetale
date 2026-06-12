@@ -36,3 +36,14 @@
     @apply bg-background text-foreground font-body antialiased;
   }
 }
+
+@layer components {
+  .prose img {
+    @apply animate-[fadeIn_0.3s_ease-in];
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

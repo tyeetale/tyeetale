@@ -49,57 +49,22 @@ export default {
 
       const userMessage = message.trim().slice(0, 500);
 
-      const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+      const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userMessage },
         ],
         max_tokens: 300,
-        stream: true,
       });
 
-      const stream = new ReadableStream({
-        async start(controller) {
-          const reader = response.getReader();
-          const decoder = new TextDecoder();
-
-          try {
-            while (true) {
-              const { done, value } = await reader.read();
-              if (done) break;
-
-              const chunk = decoder.decode(value, { stream: true });
-              const lines = chunk.split("\n");
-              for (const line of lines) {
-                if (line.startsWith("data: ")) {
-                  const data = line.slice(6);
-                  if (data === "[DONE]") continue;
-                  try {
-                    const parsed = JSON.parse(data);
-                    if (parsed.response) {
-                      controller.enqueue(new TextEncoder().encode(parsed.response));
-                    }
-                  } catch {
-                    // skip malformed lines
-                  }
-                }
-              }
-            }
-          } finally {
-            controller.close();
-          }
-        },
-      });
-
-      return new Response(stream, {
+      return new Response(response.response, {
         headers: {
           ...corsHeaders,
           "Content-Type": "text/plain; charset=utf-8",
-          "Transfer-Encoding": "chunked",
         },
       });
-    } catch {
-      return new Response("Internal error", { status: 500, headers: corsHeaders });
+    } catch (e) {
+      return new Response("Internal error: " + (e instanceof Error ? e.message : "unknown"), { status: 500, headers: corsHeaders });
     }
   },
 };
