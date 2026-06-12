@@ -14,7 +14,7 @@ const projects = {
   fibes: lazy(() => import("@/content/projects/fibes.mdx")),
 } as Record<string, React.LazyExoticComponent<React.ComponentType<any>>>;
 
-const projectOrder = ["tildenn", "coopsight", "metaphor3d", "fibes"];
+const projectOrder = ["fibes", "metaphor3d", "coopsight", "tildenn"];
 
 const projectMeta: Record<
   string,
