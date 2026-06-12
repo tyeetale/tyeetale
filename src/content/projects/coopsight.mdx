@@ -17,20 +17,40 @@ connections:
 
 ![Coopsight Preview](/assets/coopsight/preview.png)
 
-70% of startups fail. Many don't fail because the product is bad — they fail because they're isolated. No distribution partners, no complementary tech, no ecosystem leverage. The question we asked: can you use data to surface partnership opportunities that humans miss?
+## Founder-Market Fit
+
+I was a sophomore at NYU Shanghai when my best friend George came back from working as a junior analyst at VCs overseas. Living in China, we had a front-row seat to something the West hadn't figured out: super apps. [WeChat](https://www.wechat.com/) and [Alipay](https://global.alipay.com/) had built ecosystems where services fed into each other — payments, social, commerce, logistics — creating compounding value through tight integration. We started asking: why doesn't this exist for startups in the West?
+
+The three of us — George as CEO, Arrow as CTO, and me as COO — spent our time outside of class mapping how companies could replicate this ecosystem-level thinking globally.
 
 ![Coopsight 1](/assets/coopsight/1.png)
 
-I co-founded Coopsight with two partners from venture capital backgrounds. They saw the problem from the investor side — portfolio companies that should be working together but never meet. I saw the product opportunity: a matching system that ranks startup compatibility using data signals across industry, stage, technology, and geography.
+## Context (2019)
+
+We were watching massive IPOs fail and VCs scrambling for an edge. SoftBank's Vision Fund was pouring billions without a clear ecosystem thesis. Even Y Combinator, the gold standard, wasn't systematically connecting portfolio companies to create partnership synergies. Startups sat next to each other in the same accelerator and never talked.
+
+We saw what that isolation cost: startups failing not because the product was bad, but because they were missing essential partnerships — distribution channels, complementary tech, shared customer bases. The thesis: if you could map relationships between startups the way China's super apps mapped services, you could unlock compounding growth across an entire portfolio.
+
+## System Design
+
+We scraped company data from Crunchbase, PitchBook, and LinkedIn to build profiles. But the real signal came from self-reported data — startups could upload pitch decks and documents, which we OCR'd and ran through keyword extraction. We built a global keyword bank database modeled on the partnership patterns we'd observed in China's ecosystem, mapping complementary technology relationships to score compatibility.
+
+The matching algorithm ranked startups across multiple dimensions — industry overlap, technology complementarity, stage alignment, and geographic proximity. Each potential pairing got a composite score.
 
 ![Coopsight 2](/assets/coopsight/2.png)
 
-We pitched VCs, onboarded accelerator portfolios, and iterated on the matching algorithm. I handled product, design, and engineering simultaneously — building the platform while running customer discovery and pitching in the same week.
+## Product & Design
+
+The core UX was a Tinder-like swipe interface. Startups would see potential partners ranked from highest to lowest match score, swipe to express interest, and mutual matches opened a direct communication channel. I handled the full product surface — matching interface, company profiles, conversation layer — alongside managing the team, financials, and operations as COO. In practice, I was a technical co-founder wearing every operational hat.
 
 ![Coopsight 3](/assets/coopsight/3.png)
 
-This was my first real startup. I learned to build fast, iterate on product-market fit, and wear every hat. More importantly, this is where I first touched ML-driven product thinking — using data to make decisions that humans can't make at scale.
+## Outcome
+
+We got 500 startups signed up on the platform and were in discussions for a potential partnership with Sberbank, Russia's largest bank, to apply the matching system to their portfolio companies.
+
+Then COVID hit. Startups went into survival mode. Partnership-building dropped to zero priority when companies were fighting to stay alive. The market we were serving effectively froze. We made the decision to pause, focus on finishing our degrees, and graduate from NYU Shanghai.
 
 ![Coopsight 4](/assets/coopsight/4.png)
 
-The data matching work here planted the seed for everything that came after. Blue Origin's financial data infrastructure, Onsite's AI system, Mosslayer's intent mapping — they all trace back to this idea that systems can surface insights humans miss.
+The experience planted seeds that grew into everything after. The data matching work — scraping, OCR, keyword mapping, scoring compatibility — was my first real exposure to building systems that surface insights humans miss at scale. That same thinking drives the data infrastructure I build at Blue Origin and the intent mapping at Mosslayer.
