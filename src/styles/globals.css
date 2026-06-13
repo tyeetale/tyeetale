@@ -47,3 +47,37 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  header, footer, nav,
+  .no-print,
+  astro-island[component-url*="ThemeToggle"],
+  astro-island[component-url*="Wordmark"] {
+    display: none !important;
+  }
+
+  .prose img {
+    break-inside: avoid;
+    max-width: 100% !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  a[href^="/"]::after {
+    content: " (https://tyeetale.vercel.app" attr(href) ")";
+  }
+}

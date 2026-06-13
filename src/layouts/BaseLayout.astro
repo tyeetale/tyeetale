@@ -100,5 +100,9 @@ const websiteJsonLd = {
     <div class="mx-auto w-full max-w-[640px] px-4 sm:px-6 py-8 sm:py-12 min-h-screen flex flex-col">
       <slot />
     </div>
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
+    </script>
   </body>
 </html>

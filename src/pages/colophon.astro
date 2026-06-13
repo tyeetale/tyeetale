@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Colophon" description="How this site is built." path="/colophon">
+  <Header />
+  <h1 class="font-heading font-bold text-xl text-foreground mb-2">Colophon</h1>
+  <p class="text-muted-foreground text-sm mb-10">How this site is built.</p>
+
+  <div class="flex flex-col gap-8 mb-12">
+    <section>
+      <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-3">Stack</h2>
+      <div class="flex flex-col gap-1.5 text-sm">
+        <p class="text-muted-foreground"><span class="text-foreground">Framework:</span> Astro with React islands</p>
+        <p class="text-muted-foreground"><span class="text-foreground">Styling:</span> TailwindCSS</p>
+        <p class="text-muted-foreground"><span class="text-foreground">Content:</span> MDX via Astro Content Collections</p>
+        <p class="text-muted-foreground"><span class="text-foreground">Fonts:</span> Outfit (headings), Geist (body)</p>
+        <p class="text-muted-foreground"><span class="text-foreground">Icons:</span> Lucide React</p>
+        <p class="text-muted-foreground"><span class="text-foreground">Graph:</span> react-force-graph-2d</p>
+        <p class="text-muted-foreground"><span class="text-foreground">AI Chat:</span> Cloudflare Workers AI (Llama 3.3 70B)</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-3">Infrastructure</h2>
+      <div class="flex flex-col gap-1.5 text-sm">
+        <p class="text-muted-foreground"><span class="text-foreground">Hosting:</span> Vercel (static)</p>
+        <p class="text-muted-foreground"><span class="text-foreground">Edge AI:</span> Cloudflare Workers</p>
+        <p class="text-muted-foreground"><span class="text-foreground">DNS:</span> Vercel</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-3">Design Principles</h2>
+      <div class="flex flex-col gap-1.5 text-sm text-muted-foreground">
+        <p>Text-forward. Content speaks, no decoration.</p>
+        <p>Dark mode default. Light mode available.</p>
+        <p>Zero JS on static pages. React only where interactivity is needed.</p>
+        <p>Prerendered HTML for SEO and AI discoverability.</p>
+        <p>Built with AI assistance. Designed by hand.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-3">Features</h2>
+      <div class="flex flex-col gap-1.5 text-sm text-muted-foreground">
+        <p>Interactive force-directed knowledge graph</p>
+        <p>AI chat (ask about my work)</p>
+        <p>Machine-readable profile (llms.txt)</p>
+        <p>RSS feed</p>
+        <p>QR code for quick sharing</p>
+        <p>Command palette (⌘K)</p>
+        <p>Easter eggs (keep clicking)</p>
+      </div>
+    </section>
+  </div>
+
+  <Footer />
+</BaseLayout>
