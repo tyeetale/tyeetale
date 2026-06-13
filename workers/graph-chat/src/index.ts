@@ -2,7 +2,7 @@ interface Env {
   AI: any;
 }
 
-const SYSTEM_PROMPT = `You are an AI assistant on Thomas Yee's personal site. Answer questions about his work, projects, and career concisely. Be conversational and helpful. If you don't know, say so.
+const CHAT_SYSTEM_PROMPT = `You are an AI assistant on Thomas Yee's personal site. Answer questions about his work, projects, and career concisely. Be conversational and helpful. If you don't know, say so.
 
 Context:
 - Thomas Yee (tyeetale) is a three-time founder, AI product builder, and data engineer behind a multi-billion-dollar rocket program
@@ -32,6 +32,10 @@ Skills: LLM agents, MCP servers, RAG, Databricks, ETL, Python, TypeScript, React
 
 Principles: Ship then refine. Systems over features. AI is an interface problem. Data compounds. Cross-discipline advantage. Intent over action. Consistent output.`;
 
+const IMPROVE_PROMPT_SYSTEM = `You are a prompt engineering expert. Take the user's prompt and improve it to be clearer, more specific, and more likely to get a good response from an AI model. Return only the improved prompt, nothing else. Keep the same intent but make it more effective.`;
+
+const GENERATE_TEMPLATE_SYSTEM = `You are an expert at writing system prompts for AI models. Given a use case description, generate a well-structured system prompt template. Include: role definition, constraints, output format, and example interaction. Return only the system prompt template, nothing else.`;
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const corsHeaders = {
@@ -48,29 +52,82 @@ export default {
       return new Response("Method not allowed", { status: 405, headers: corsHeaders });
     }
 
+    const url = new URL(request.url);
+    const path = url.pathname;
+
     try {
-      const { message } = (await request.json()) as { message?: string };
+      if (path === "/chat") {
+        const { message } = (await request.json()) as { message?: string };
 
-      if (!message || message.trim().length === 0) {
-        return new Response("Message required", { status: 400, headers: corsHeaders });
+        if (!message || message.trim().length === 0) {
+          return new Response("Message required", { status: 400, headers: corsHeaders });
+        }
+
+        const userMessage = message.trim().slice(0, 500);
+
+        const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+          messages: [
+            { role: "system", content: CHAT_SYSTEM_PROMPT },
+            { role: "user", content: userMessage },
+          ],
+          max_tokens: 300,
+        });
+
+        return new Response(response.response, {
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        });
+      } else if (path === "/improve-prompt") {
+        const { prompt } = (await request.json()) as { prompt?: string };
+
+        if (!prompt || prompt.trim().length === 0) {
+          return new Response("Prompt required", { status: 400, headers: corsHeaders });
+        }
+
+        const userPrompt = prompt.trim().slice(0, 1000);
+
+        const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+          messages: [
+            { role: "system", content: IMPROVE_PROMPT_SYSTEM },
+            { role: "user", content: userPrompt },
+          ],
+          max_tokens: 300,
+        });
+
+        return new Response(response.response, {
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        });
+      } else if (path === "/generate-template") {
+        const { useCase } = (await request.json()) as { useCase?: string };
+
+        if (!useCase || useCase.trim().length === 0) {
+          return new Response("Use case required", { status: 400, headers: corsHeaders });
+        }
+
+        const userUseCase = useCase.trim().slice(0, 500);
+
+        const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+          messages: [
+            { role: "system", content: GENERATE_TEMPLATE_SYSTEM },
+            { role: "user", content: userUseCase },
+          ],
+          max_tokens: 500,
+        });
+
+        return new Response(response.response, {
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        });
+      } else {
+        return new Response("Not found", { status: 404, headers: corsHeaders });
       }
-
-      const userMessage = message.trim().slice(0, 500);
-
-      const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: userMessage },
-        ],
-        max_tokens: 300,
-      });
-
-      return new Response(response.response, {
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "text/plain; charset=utf-8",
-        },
-      });
     } catch (e) {
       return new Response("Internal error: " + (e instanceof Error ? e.message : "unknown"), { status: 500, headers: corsHeaders });
     }
