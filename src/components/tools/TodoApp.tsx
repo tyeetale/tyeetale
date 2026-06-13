@@ -5,6 +5,20 @@ import type { Block } from '@blocknote/core';
 
 const STORAGE_KEY = 'tyeetale-blocknote-v1';
 
+function useThemeDetect(): 'light' | 'dark' {
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  useEffect(() => {
+    function check() {
+      setTheme(document.documentElement.classList.contains('light') ? 'light' : 'dark');
+    }
+    check();
+    const observer = new MutationObserver(check);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+  return theme;
+}
+
 export default function TodoApp() {
   const [initialContent, setInitialContent] = useState<Block[] | undefined>(undefined);
   const [loaded, setLoaded] = useState(false);
@@ -42,6 +56,7 @@ function EditorInner({ initialContent, copied, setCopied, showImport, setShowImp
   importText: string;
   setImportText: (v: string) => void;
 }) {
+  const theme = useThemeDetect();
   const editor = useCreateBlockNote({
     initialContent: initialContent || undefined,
   });
@@ -126,10 +141,10 @@ function EditorInner({ initialContent, copied, setCopied, showImport, setShowImp
       )}
 
       {/* BlockNote Editor */}
-      <div className="bn-container border border-border rounded-lg overflow-hidden min-h-[300px] [&_.bn-editor]:min-h-[300px]">
+      <div className="bn-container rounded-lg overflow-hidden min-h-[300px]">
         <BlockNoteView
           editor={editor}
-          theme="dark"
+          theme={theme}
         />
       </div>
 

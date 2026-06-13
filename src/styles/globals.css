@@ -50,11 +50,33 @@
 
 /* BlockNote overrides */
 .bn-container {
-  --bn-colors-editor-background: var(--color-surface);
+  --bn-colors-editor-background: var(--color-background);
   --bn-colors-editor-text: var(--color-foreground);
   --bn-colors-menu-background: var(--color-surface);
   --bn-colors-menu-text: var(--color-foreground);
+  --bn-colors-hovered-background: var(--color-surface);
+  --bn-colors-selected-background: var(--color-surface);
+  --bn-colors-disabled-text: var(--color-muted);
+  --bn-colors-border: var(--color-border);
   --bn-font-family: 'Geist', sans-serif;
+  font-size: 14px;
+}
+
+.bn-container .bn-editor {
+  padding: 0.5rem 0;
+}
+
+.bn-container .bn-block-content {
+  padding: 2px 0;
+  font-size: 0.875rem;
+}
+
+.bn-container .bn-side-menu {
+  opacity: 0.4;
+}
+
+.bn-container .bn-side-menu:hover {
+  opacity: 1;
 }
 
 @media print {
