@@ -70,6 +70,14 @@
   opacity: 1;
 }
 
+.bn-container .bn-block-group > .bn-block-group {
+  border-left: none !important;
+}
+
+.bn-container [class*="blockGroup"] {
+  border-left: none !important;
+}
+
 @media print {
   body {
     background: white !important;
