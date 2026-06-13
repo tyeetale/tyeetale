@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import PromptImprover from './PromptImprover';
+import SystemPromptGenerator from './SystemPromptGenerator';
 
 export default function ToolsGrid() {
   return (
@@ -50,6 +52,46 @@ export default function ToolsGrid() {
       <BentoCard className="sm:col-span-2">
         <HttpStatusCodeReference />
       </BentoCard>
+
+      {/* Section: AI Tools */}
+      <div className="sm:col-span-2 mt-4">
+        <h2 className="font-heading font-semibold text-xs uppercase tracking-widest text-foreground">
+          AI Tools
+        </h2>
+      </div>
+
+      <BentoCard className="sm:col-span-2">
+        <PromptImprover />
+      </BentoCard>
+
+      <BentoCard className="sm:col-span-2">
+        <SystemPromptGenerator />
+      </BentoCard>
+
+      {/* Section: Resources */}
+      <div className="sm:col-span-2 mt-4">
+        <h2 className="font-heading font-semibold text-xs uppercase tracking-widest text-foreground">
+          Resources
+        </h2>
+      </div>
+
+      <BentoCard className="sm:col-span-2">
+        <div>
+          <h3 className="text-xs font-heading font-semibold uppercase tracking-widest text-foreground mb-3">
+            Curated Links
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <ResourceLink title="Anthropic Cookbook" href="https://github.com/anthropics/anthropic-cookbook" description="Prompt engineering patterns" />
+            <ResourceLink title="OpenAI Cookbook" href="https://github.com/openai/openai-cookbook" description="API usage examples" />
+            <ResourceLink title="Awesome MCP Servers" href="https://github.com/punkpeye/awesome-mcp-servers" description="Community MCP servers" />
+            <ResourceLink title="LangChain" href="https://github.com/langchain-ai/langchain" description="LLM orchestration framework" />
+            <ResourceLink title="Vercel AI SDK" href="https://github.com/vercel/ai" description="Streaming AI UI toolkit" />
+            <ResourceLink title="Cloudflare Skills" href="https://github.com/cloudflare/skills" description="AI agent skills" />
+            <ResourceLink title="Prompt Engineering Guide" href="https://github.com/dair-ai/Prompt-Engineering-Guide" description="Comprehensive prompt guide" />
+            <ResourceLink title="AI Agent Frameworks" href="https://github.com/e2b-dev/awesome-ai-agents" description="Curated agent repos" />
+          </div>
+        </div>
+      </BentoCard>
     </div>
   );
 }
@@ -59,6 +101,20 @@ function BentoCard({ children, className = "" }: { children: React.ReactNode; cl
     <div className={`border border-border rounded-xl p-4 bg-surface/50 overflow-hidden ${className}`}>
       {children}
     </div>
+  );
+}
+
+function ResourceLink({ title, href, description }: { title: string; href: string; description: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col p-2 rounded border border-border hover:border-muted-foreground transition-colors"
+    >
+      <span className="text-foreground text-xs font-medium">{title}</span>
+      <span className="text-muted text-[0.7rem]">{description}</span>
+    </a>
   );
 }
 
