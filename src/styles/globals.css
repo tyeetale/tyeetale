@@ -70,6 +70,11 @@
   opacity: 1;
 }
 
+.bn-container .bn-block-group .bn-block-group .bn-block-outer:before {
+  border-left: none !important;
+  content: none !important;
+}
+
 .bn-container .bn-block-group {
   border-left: none !important;
   border: none !important;
