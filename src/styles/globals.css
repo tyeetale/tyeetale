@@ -70,12 +70,18 @@
   opacity: 1;
 }
 
-.bn-container .bn-block-group > .bn-block-group {
+.bn-container .bn-block-group {
+  border-left: none !important;
+  border: none !important;
+}
+
+.bn-container .bn-block-outer {
   border-left: none !important;
 }
 
-.bn-container [class*="blockGroup"] {
+.bn-container [data-node-type="blockGroup"] {
   border-left: none !important;
+  border: none !important;
 }
 
 @media print {
