@@ -1,0 +1,3 @@
+Contact: mailto:tyeetale@gmail.com
+Preferred-Languages: en
+Canonical: https://tyeetale.vercel.app/.well-known/security.txt

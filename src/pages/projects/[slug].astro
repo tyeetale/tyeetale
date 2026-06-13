@@ -18,6 +18,9 @@ export async function getStaticPaths() {
 const { project, slug } = Astro.props;
 const { Content } = await project.render();
 
+const words = project.body?.split(/\s+/).length || 0;
+const readingTime = Math.ceil(words / 200);
+
 const projectOrder = ['fibes', 'metaphor3d', 'coopsight', 'tildenn'];
 const allProjects = await getCollection('projects');
 const currentIndex = projectOrder.indexOf(slug);
@@ -34,7 +37,8 @@ const nextProject = nextSlug ? allProjects.find(p => p.id.replace(/\.mdx?$/, '')
       &larr; back
     </a>
     <h1 class="font-heading font-bold text-2xl text-foreground mb-1">{project.data.title}</h1>
-    <p class="text-muted-foreground text-[0.95rem] mb-4">{project.data.tagline}</p>
+    <p class="text-muted-foreground text-[0.95rem] mb-1">{project.data.tagline}</p>
+    <p class="text-muted text-xs mb-4">{readingTime} min read</p>
     {project.data.badges && (
       <div class="flex flex-wrap gap-2 mb-8">
         {project.data.badges.map((badge: string) => (

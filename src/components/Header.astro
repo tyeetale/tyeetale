@@ -7,6 +7,8 @@ const navLinks = [
   { label: 'notes', href: '/notes' },
   { label: 'tools', href: '/tools' },
 ];
+
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="flex items-center justify-between pb-4 mb-10 border-b border-border">
@@ -14,7 +16,14 @@ const navLinks = [
   <nav class="flex items-center gap-3">
     {navLinks.map((link, idx) => (
       <>
-        <a href={link.href} class="text-xs text-muted hover:text-foreground transition-colors">
+        <a
+          href={link.href}
+          class={`text-xs transition-colors ${
+            currentPath.startsWith(link.href)
+              ? 'text-foreground font-medium'
+              : 'text-muted hover:text-foreground'
+          }`}
+        >
           {link.label}
         </a>
         {idx < navLinks.length - 1 && <span class="text-border text-xs">&middot;</span>}
