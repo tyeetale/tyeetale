@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import PromptImprover from './PromptImprover';
 import SystemPromptGenerator from './SystemPromptGenerator';
+import ValuationCalc from './ValuationCalc';
+import URLShortener from './URLShortener';
 
 export default function ToolsGrid() {
   return (
@@ -52,6 +54,9 @@ export default function ToolsGrid() {
       <BentoCard className="sm:col-span-2">
         <HttpStatusCodeReference />
       </BentoCard>
+      <BentoCard className="sm:col-span-2">
+        <ValuationCalc />
+      </BentoCard>
 
       {/* Section: AI Tools */}
       <div className="sm:col-span-2 mt-4">
@@ -59,6 +64,10 @@ export default function ToolsGrid() {
           AI Tools
         </h2>
       </div>
+
+      <BentoCard>
+        <URLShortener />
+      </BentoCard>
 
       <BentoCard className="sm:col-span-2">
         <PromptImprover />

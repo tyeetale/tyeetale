@@ -4,3 +4,7 @@ compatibility_date = "2024-06-14"
 
 [ai]
 binding = "AI"
+
+[[kv_namespaces]]
+binding = "URLS"
+id = "685d0355d1704c1985ddfcf98c84850b"

@@ -1,5 +1,6 @@
 interface Env {
   AI: any;
+  URLS: KVNamespace;
 }
 
 const CHAT_SYSTEM_PROMPT = `You are an AI assistant on Thomas Yee's personal site. Answer questions about his work, projects, and career concisely. Be conversational and helpful. If you don't know, say so.
@@ -40,7 +41,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     };
 
@@ -48,15 +49,36 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    const url = new URL(request.url);
+    const path = url.pathname;
+
+    // GET /s/:code — redirect lookup (no method restriction)
+    if (path.startsWith("/s/")) {
+      const code = path.slice(3);
+      const storedUrl = await env.URLS.get(code);
+      if (!storedUrl) {
+        return new Response("Not found", { status: 404, headers: corsHeaders });
+      }
+      return Response.redirect(storedUrl, 302);
+    }
+
     if (request.method !== "POST") {
       return new Response("Method not allowed", { status: 405, headers: corsHeaders });
     }
 
-    const url = new URL(request.url);
-    const path = url.pathname;
-
     try {
-      if (path === "/chat") {
+      if (path === "/shorten") {
+        const { url: targetUrl } = (await request.json()) as { url?: string };
+        if (!targetUrl || !targetUrl.startsWith("http")) {
+          return new Response("Valid URL required", { status: 400, headers: corsHeaders });
+        }
+        const code = Math.random().toString(36).substring(2, 8);
+        await env.URLS.put(code, targetUrl);
+        const shortUrl = `https://graph-chat.thomasyee28.workers.dev/s/${code}`;
+        return new Response(JSON.stringify({ shortUrl, code }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      } else if (path === "/chat") {
         const { message } = (await request.json()) as { message?: string };
 
         if (!message || message.trim().length === 0) {
