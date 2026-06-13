@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import QRCode from '../components/QRCode';
+---
+
+<BaseLayout title="QR" description="Scan to visit tyeetale.vercel.app" path="/qr" noindex={true}>
+  <Header />
+  <a href="/" class="inline-flex items-center gap-1.5 text-muted text-sm hover:text-foreground transition-colors mb-8">
+    &larr; back
+  </a>
+  <div class="flex flex-col items-center justify-center min-h-[50vh] gap-4">
+    <QRCode client:load />
+    <p class="text-muted text-sm">Scan to visit tyeetale.vercel.app</p>
+  </div>
+</BaseLayout>

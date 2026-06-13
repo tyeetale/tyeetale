@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Uses" description="What Thomas Yee uses to build." path="/uses" noindex={true}>
+  <Header />
+
+  <h1 class="font-heading font-bold text-xl text-foreground mb-2">Uses</h1>
+  <p class="text-muted-foreground text-sm mb-10">
+    Software and tools I use to build things.
+  </p>
+
+  <section class="mb-10">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-4">Editor & Terminal</h2>
+    <div class="flex flex-col gap-2.5">
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Cursor</span><span class="text-muted text-[0.8rem] text-right">AI-native code editor. Primary IDE.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">VS Code</span><span class="text-muted text-[0.8rem] text-right">Fallback for specific extensions.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Warp</span><span class="text-muted text-[0.8rem] text-right">Terminal with AI built in.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Git</span><span class="text-muted text-[0.8rem] text-right">Version control. GitHub for hosting.</span></div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-4">Languages</h2>
+    <div class="flex flex-col gap-2.5">
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">TypeScript</span><span class="text-muted text-[0.8rem] text-right">Default for everything frontend and backend.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Python</span><span class="text-muted text-[0.8rem] text-right">Data engineering, ML pipelines, scripts.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">SQL</span><span class="text-muted text-[0.8rem] text-right">PostgreSQL, BigQuery, analytical queries.</span></div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-4">Frameworks & Libraries</h2>
+    <div class="flex flex-col gap-2.5">
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">React</span><span class="text-muted text-[0.8rem] text-right">UI framework of choice.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Vite</span><span class="text-muted text-[0.8rem] text-right">Build tool. Fast, no config bloat.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">TailwindCSS</span><span class="text-muted text-[0.8rem] text-right">Styling. Utility-first.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Next.js</span><span class="text-muted text-[0.8rem] text-right">When SSR or edge rendering is needed.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">FastAPI</span><span class="text-muted text-[0.8rem] text-right">Python APIs.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">React Native</span><span class="text-muted text-[0.8rem] text-right">Mobile when needed.</span></div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-4">Infrastructure & Data</h2>
+    <div class="flex flex-col gap-2.5">
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Vercel</span><span class="text-muted text-[0.8rem] text-right">Frontend deployments.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Cloudflare Workers</span><span class="text-muted text-[0.8rem] text-right">Edge compute, AI inference.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Supabase</span><span class="text-muted text-[0.8rem] text-right">Database, auth, realtime.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">GCP / BigQuery</span><span class="text-muted text-[0.8rem] text-right">Data warehousing, production infra.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">AWS</span><span class="text-muted text-[0.8rem] text-right">S3, Lambda, enterprise infra.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Docker</span><span class="text-muted text-[0.8rem] text-right">Containerization for services.</span></div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-4">AI & ML</h2>
+    <div class="flex flex-col gap-2.5">
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">OpenAI / Claude / Llama</span><span class="text-muted text-[0.8rem] text-right">LLMs for product features and workflows.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Workers AI</span><span class="text-muted text-[0.8rem] text-right">Edge inference, free tier models.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">LangChain / LlamaIndex</span><span class="text-muted text-[0.8rem] text-right">When orchestration is needed.</span></div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-4">Design & Productivity</h2>
+    <div class="flex flex-col gap-2.5">
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Figma</span><span class="text-muted text-[0.8rem] text-right">Design, prototyping, collaboration.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Notion</span><span class="text-muted text-[0.8rem] text-right">Documentation, planning.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Linear</span><span class="text-muted text-[0.8rem] text-right">Project management.</span></div>
+      <div class="flex items-baseline justify-between gap-4"><span class="text-foreground text-[0.9rem]">Arc</span><span class="text-muted text-[0.8rem] text-right">Browser.</span></div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

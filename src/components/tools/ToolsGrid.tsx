@@ -1,49 +1,21 @@
-import { SEO } from "@/components/SEO";
-import { Container } from "@/components/layout/Container";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { useState, useEffect, useRef } from "react";
 
-export function Uses() {
+export default function ToolsGrid() {
   return (
-    <>
-      <SEO
-        title="Tools"
-        description="Interactive tools and widgets by Thomas Yee."
-        path="/tools"
-      />
-      <Container>
-        <Header />
-        <h1 className="font-heading font-bold text-xl text-foreground mb-2">Tools</h1>
-        <p className="text-muted-foreground text-sm mb-8">
-          Interactive things. Play around.
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
-          {/* Live Clock */}
-          <BentoCard className="sm:col-span-2">
-            <LiveClock />
-          </BentoCard>
-
-          {/* Interactive color toy */}
-          <BentoCard>
-            <ColorOrb />
-          </BentoCard>
-
-          {/* Keystroke counter */}
-          <BentoCard>
-            <KeystrokeRipple />
-          </BentoCard>
-
-          {/* Gravity dots toy */}
-          <BentoCard className="sm:col-span-2">
-            <GravityDots />
-          </BentoCard>
-        </div>
-
-        <Footer />
-      </Container>
-    </>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+      <BentoCard className="sm:col-span-2">
+        <LiveClock />
+      </BentoCard>
+      <BentoCard>
+        <ColorOrb />
+      </BentoCard>
+      <BentoCard>
+        <KeystrokeRipple />
+      </BentoCard>
+      <BentoCard className="sm:col-span-2">
+        <GravityDots />
+      </BentoCard>
+    </div>
   );
 }
 
@@ -189,7 +161,6 @@ function GravityDots() {
     };
     resize();
 
-    // Initialize dots
     const w = canvas.offsetWidth;
     const h = canvas.offsetHeight;
     dotsRef.current = Array.from({ length: 30 }, () => ({
@@ -211,7 +182,6 @@ function GravityDots() {
       const mouse = mouseRef.current;
 
       for (const dot of dots) {
-        // Attract toward mouse if active
         if (mouse.active) {
           const dx = mouse.x - dot.x;
           const dy = mouse.y - dot.y;
@@ -222,28 +192,22 @@ function GravityDots() {
           }
         }
 
-        // Friction
         dot.vx *= 0.98;
         dot.vy *= 0.98;
-
-        // Move
         dot.x += dot.vx;
         dot.y += dot.vy;
 
-        // Bounce off walls
         if (dot.x < dot.r) { dot.x = dot.r; dot.vx *= -0.8; }
         if (dot.x > w - dot.r) { dot.x = w - dot.r; dot.vx *= -0.8; }
         if (dot.y < dot.r) { dot.y = dot.r; dot.vy *= -0.8; }
         if (dot.y > h - dot.r) { dot.y = h - dot.r; dot.vy *= -0.8; }
 
-        // Draw
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${dot.hue}, 60%, 60%, 0.8)`;
         ctx.fill();
       }
 
-      // Draw connections between nearby dots
       for (let i = 0; i < dots.length; i++) {
         for (let j = i + 1; j < dots.length; j++) {
           const dx = dots[i].x - dots[j].x;

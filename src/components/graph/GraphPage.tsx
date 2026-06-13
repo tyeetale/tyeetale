@@ -1,6 +1,4 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { SEO } from "@/components/SEO";
 import { ArrowLeft } from "lucide-react";
 import { graphData, type GraphNode } from "@/data/graph";
 import { GraphCanvas } from "@/components/graph/GraphCanvas";
@@ -8,7 +6,7 @@ import { NodeSidebar } from "@/components/graph/NodeSidebar";
 import { GraphSearch } from "@/components/graph/GraphSearch";
 import { GraphChat } from "@/components/graph/GraphChat";
 
-export function Graph() {
+export default function GraphPage() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -78,51 +76,43 @@ export function Graph() {
   }, []);
 
   return (
-    <>
-      <SEO
-        title="Graph"
-        description="Interactive knowledge graph of Thomas Yee's projects and topics."
-        path="/graph"
-        noindex={true}
-      />
-      <div className="fixed inset-0 bg-[#0a0a0a]">
-        <div className="absolute top-0 left-0 right-0 z-10 p-4 flex items-center justify-between bg-gradient-to-b from-[#0a0a0a] to-transparent">
-          <div className="flex items-center gap-4">
-            <Link to="/" className="inline-flex items-center gap-1.5 text-[#a3a3a3] text-sm hover:text-[#e5e5e5] transition-colors">
-              <ArrowLeft size={14} />
-              back
-            </Link>
-            <span className="font-heading font-bold text-sm text-[#e5e5e5] tracking-tight">tyeetale</span>
-          </div>
-          <span className="text-[#555555] text-xs">drag to explore</span>
+    <div className="fixed inset-0 bg-[#0a0a0a]">
+      <div className="absolute top-0 left-0 right-0 z-10 p-4 flex items-center justify-between bg-gradient-to-b from-[#0a0a0a] to-transparent">
+        <div className="flex items-center gap-4">
+          <a href="/" className="inline-flex items-center gap-1.5 text-[#a3a3a3] text-sm hover:text-[#e5e5e5] transition-colors">
+            <ArrowLeft size={14} />
+            back
+          </a>
+          <span className="font-heading font-bold text-sm text-[#e5e5e5] tracking-tight">tyeetale</span>
         </div>
-
-        <GraphSearch
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          activeTopics={activeTopics}
-          onTopicToggle={handleTopicToggle}
-          onClearFilters={handleClearFilters}
-        />
-
-        {dimensions.width > 0 && (
-          <GraphCanvas
-            graphData={graphData}
-            width={dimensions.width}
-            height={dimensions.height}
-            highlightNodeIds={highlightNodeIds}
-            onNodeClick={handleNodeClick}
-          />
-        )}
-
-        <NodeSidebar
-          node={selectedNode}
-          onClose={() => setSelectedNode(null)}
-          onNodeSelect={handleNodeSelect}
-        />
-
-        <GraphChat />
+        <span className="text-[#555555] text-xs">drag to explore</span>
       </div>
-    </>
+
+      <GraphSearch
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        activeTopics={activeTopics}
+        onTopicToggle={handleTopicToggle}
+        onClearFilters={handleClearFilters}
+      />
+
+      {dimensions.width > 0 && (
+        <GraphCanvas
+          graphData={graphData}
+          width={dimensions.width}
+          height={dimensions.height}
+          highlightNodeIds={highlightNodeIds}
+          onNodeClick={handleNodeClick}
+        />
+      )}
+
+      <NodeSidebar
+        node={selectedNode}
+        onClose={() => setSelectedNode(null)}
+        onNodeSelect={handleNodeSelect}
+      />
+
+      <GraphChat />
+    </div>
   );
 }

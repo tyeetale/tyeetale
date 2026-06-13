@@ -1,0 +1,102 @@
+---
+import '../styles/globals.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  type?: string;
+  noindex?: boolean;
+}
+
+const { title, description, path, type = 'website', noindex = false } = Astro.props;
+const siteUrl = 'https://tyeetale.vercel.app';
+const fullUrl = `${siteUrl}${path}`;
+const imageUrl = `${siteUrl}/og.png`;
+const fullTitle = path === '/' ? title : `${title} — tyeetale`;
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Thomas Yee",
+  alternateName: "tyeetale",
+  url: siteUrl,
+  image: `${siteUrl}/profile.png`,
+  jobTitle: "Financial Data Engineer",
+  worksFor: { "@type": "Organization", name: "Blue Origin", url: "https://www.blueorigin.com" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "NYU Shanghai", url: "https://shanghai.nyu.edu" },
+  knowsAbout: ["Artificial Intelligence", "Data Engineering", "Product Management", "Machine Learning", "Full Stack Development"],
+  sameAs: ["https://github.com/tyeetale", "https://x.com/tyeetale", "https://linkedin.com/in/tyeetyee"],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "tyeetale",
+  url: siteUrl,
+  author: personJsonLd,
+};
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Thomas Yee" />
+    <link rel="canonical" href={fullUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={fullUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:site_name" content="tyeetale" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@tyeetale" />
+    <meta name="twitter:creator" content="@tyeetale" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <!-- JSON-LD -->
+    {path === '/' && (
+      <script type="application/ld+json" set:html={JSON.stringify([websiteJsonLd, personJsonLd])} />
+    )}
+    {path !== '/' && type === 'article' && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: title,
+        description: description,
+        url: fullUrl,
+        image: imageUrl,
+        author: personJsonLd,
+      })} />
+    )}
+
+    <!-- Theme flash prevention -->
+    <script is:inline>
+      (function() {
+        var theme = localStorage.getItem('theme') || 'dark';
+        if (theme === 'system') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
+  </head>
+  <body class="bg-background text-foreground font-body antialiased">
+    <div class="mx-auto w-full max-w-[640px] px-4 sm:px-6 py-8 sm:py-12 min-h-screen flex flex-col">
+      <slot />
+    </div>
+  </body>
+</html>

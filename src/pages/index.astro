@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Intro } from '../components/home/Intro';
+import { OtherProjects } from '../components/home/OtherProjects';
+import { Timeline } from '../components/home/Timeline';
+import { PastProjects } from '../components/home/PastProjects';
+---
+
+<BaseLayout title="Thomas Yee — tyeetale" description="Three-time founder, AI product builder, and data engineer. Building AI systems, data infrastructure, and products." path="/">
+  <Header />
+  <div class="flex-1 flex flex-col justify-center">
+    <Intro />
+    <OtherProjects />
+    <Timeline />
+    <PastProjects />
+  </div>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="About" description="How Thomas Yee thinks about building products, systems, and teams. Principles and current interests." path="/about">
+  <Header />
+
+  <h1 class="font-heading font-bold text-xl text-foreground mb-2">About</h1>
+  <p class="text-muted-foreground text-sm mb-10">
+    How I think about making things. Principles that stay, interests that evolve.
+  </p>
+
+  <!-- Principles -->
+  <section class="mb-12">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-6">
+      Principles
+    </h2>
+    <div class="flex flex-col gap-6">
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Ship, then refine</h3>
+        <p class="text-muted-foreground text-[0.85rem] leading-relaxed">A working thing in someone's hands teaches more than a perfect thing in your head. Get it out, watch how it breaks, fix what matters.</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Systems over features</h3>
+        <p class="text-muted-foreground text-[0.85rem] leading-relaxed">Features solve one problem. Systems solve categories of problems. I always ask: what's the system that makes this feature trivial to build?</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">AI is an interface problem</h3>
+        <p class="text-muted-foreground text-[0.85rem] leading-relaxed">Models are commoditizing. The hard part is designing the interface that makes AI output useful. A great model with bad UX is just a chatbot.</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Data compounds</h3>
+        <p class="text-muted-foreground text-[0.85rem] leading-relaxed">Every data pipeline you build, every connection you surface, every pattern you capture. It compounds. Build the infrastructure to learn from your own systems.</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Cross-discipline advantage</h3>
+        <p class="text-muted-foreground text-[0.85rem] leading-relaxed">The best products happen at intersections. Finance informs how I think about data. Design informs how I think about systems. Engineering makes it all real.</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Intent over action</h3>
+        <p class="text-muted-foreground text-[0.85rem] leading-relaxed">Understanding what someone is trying to do matters more than what they asked for. Map intent first, then figure out the action.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current Interests -->
+  <section class="mb-12">
+    <h2 class="font-heading font-semibold text-xs uppercase tracking-widest text-foreground mb-6">
+      Currently Exploring
+    </h2>
+    <div class="flex flex-col gap-4">
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Agentic systems</h3>
+        <p class="text-muted text-[0.85rem] leading-relaxed">How do you build AI agents that reliably act on behalf of users? What does trust look like when the agent holds your wallet?</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Intent mapping</h3>
+        <p class="text-muted text-[0.85rem] leading-relaxed">Going from 'what the user said' to 'what they actually need' to 'what action to take.' The gap between these three is where most AI products fail.</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Data infrastructure at human scale</h3>
+        <p class="text-muted text-[0.85rem] leading-relaxed">Most data pipelines are built for dashboards no one reads. How do you build systems where the data surfaces insights at the moment they matter?</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">AI-native UX patterns</h3>
+        <p class="text-muted text-[0.85rem] leading-relaxed">We're still designing AI products with forms and buttons. What does interaction look like when the system can anticipate, suggest, and act?</p>
+      </div>
+      <div>
+        <h3 class="text-foreground text-[0.95rem] font-medium mb-1">Cost of intelligence</h3>
+        <p class="text-muted text-[0.85rem] leading-relaxed">Running AI at scale is expensive. How do you architect systems where the right model runs at the right time for the right cost?</p>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

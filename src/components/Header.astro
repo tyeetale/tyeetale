@@ -1,0 +1,25 @@
+---
+const navLinks = [
+  { label: 'about', href: '/about' },
+  { label: 'projects', href: '/projects' },
+  { label: 'notes', href: '/notes' },
+  { label: 'tools', href: '/tools' },
+];
+---
+
+<header class="flex items-center justify-between pb-4 mb-10 border-b border-border">
+  <a href="/" class="flex items-center gap-2 font-heading font-bold text-base text-foreground tracking-tight">
+    <img src="/profile.png" alt="tyeetale" class="w-6 h-6 rounded-full" />
+    tyeetale
+  </a>
+  <nav class="flex items-center gap-3">
+    {navLinks.map((link, idx) => (
+      <>
+        <a href={link.href} class="text-xs text-muted hover:text-foreground transition-colors">
+          {link.label}
+        </a>
+        {idx < navLinks.length - 1 && <span class="text-border text-xs">&middot;</span>}
+      </>
+    ))}
+  </nav>
+</header>

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { pastProjects } from "@/data/projects";
 
 export function PastProjects() {
@@ -13,12 +12,12 @@ export function PastProjects() {
             key={project.slug}
             className="flex items-baseline justify-between gap-4"
           >
-            <Link
-              to={project.href}
+            <a
+              href={project.href}
               className="text-foreground text-[0.9rem] underline underline-offset-[3px] decoration-border hover:decoration-foreground transition-colors"
             >
               {project.name}
-            </Link>
+            </a>
             <span className="text-muted text-[0.8rem] text-right">
               {project.description}
             </span>

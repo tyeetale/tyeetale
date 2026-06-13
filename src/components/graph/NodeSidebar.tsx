@@ -1,5 +1,4 @@
 import { X, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
 import { type GraphNode, getNodeConnections } from "@/data/graph";
 
 interface NodeSidebarProps {
@@ -37,9 +36,9 @@ export function NodeSidebar({ node, onClose, onNodeSelect }: NodeSidebarProps) {
               Visit site <ExternalLink size={12} />
             </a>
           ) : (
-            <Link to={node.href} className="inline-flex items-center gap-1.5 text-sm text-[#a3a3a3] hover:text-[#e5e5e5] underline underline-offset-2 transition-colors">
+            <a href={node.href} className="inline-flex items-center gap-1.5 text-sm text-[#a3a3a3] hover:text-[#e5e5e5] underline underline-offset-2 transition-colors">
               View project →
-            </Link>
+            </a>
           )}
         </div>
       )}

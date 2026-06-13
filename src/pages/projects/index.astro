@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const projects = [
+  { slug: 'tildenn', title: 'Tildenn', tagline: 'AI travel planner, built at the dawn of GPT-3' },
+  { slug: 'coopsight', title: 'Coopsight', tagline: 'ML-powered startup ecosystem matching' },
+  { slug: 'metaphor3d', title: 'Metaphor3D', tagline: 'AI-generated 3D mesh assets' },
+  { slug: 'fibes', title: 'Fibes', tagline: 'UGC influencer marketplace' },
+];
+---
+
+<BaseLayout title="Projects" description="Past projects by Thomas Yee. AI travel planning, ML startup matching, generative 3D, and UGC marketplaces." path="/projects">
+  <Header />
+  <h1 class="font-heading font-bold text-xl text-foreground mb-2">Projects</h1>
+  <p class="text-muted-foreground text-sm mb-10">
+    Things I've built. Click to read the full story.
+  </p>
+  <div class="flex flex-col gap-4">
+    {projects.map((project) => (
+      <a
+        href={`/projects/${project.slug}`}
+        class="group flex items-baseline justify-between gap-4 py-2 border-b border-border last:border-0"
+      >
+        <span class="text-foreground text-[0.95rem] group-hover:underline underline-offset-[3px] decoration-border transition-colors">
+          {project.title}
+        </span>
+        <span class="text-muted text-[0.8rem] text-right">
+          {project.tagline}
+        </span>
+      </a>
+    ))}
+  </div>
+  <Footer />
+</BaseLayout>

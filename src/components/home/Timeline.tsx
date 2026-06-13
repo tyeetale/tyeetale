@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
 import { timeline } from "@/data/timeline";
 
 export function Timeline() {
@@ -39,12 +38,12 @@ export function Timeline() {
                   <ExternalLink size={12} className="text-muted" />
                 </a>
               ) : (
-                <Link
-                  to={entry.href}
+                <a
+                  href={entry.href}
                   className="text-foreground text-[0.95rem] underline underline-offset-[3px] decoration-border hover:decoration-foreground transition-colors w-fit"
                 >
                   {entry.company}
-                </Link>
+                </a>
               )}
               <span className="text-muted-foreground text-[0.85rem]">
                 {entry.title}
