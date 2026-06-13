@@ -50,7 +50,7 @@
 
 /* BlockNote overrides */
 .bn-container {
-  --bn-colors-editor-background: transparent;
+  --bn-colors-editor-background: transparent !important;
   --bn-colors-editor-text: var(--color-foreground);
   --bn-colors-menu-background: var(--color-surface);
   --bn-colors-menu-text: var(--color-foreground);
@@ -60,10 +60,18 @@
   --bn-colors-border: var(--color-border);
   --bn-font-family: 'Geist', sans-serif;
   font-size: 14px;
+  background: transparent !important;
+}
+
+.bn-container [class*="root"],
+.bn-container [class*="editor"],
+.bn-container [data-bn-editor] {
+  background: transparent !important;
 }
 
 .bn-container .bn-editor {
   padding: 0.5rem 0;
+  background: transparent !important;
 }
 
 .bn-container .bn-block-content {
