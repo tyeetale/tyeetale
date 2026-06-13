@@ -12,6 +12,13 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => 
+        !page.includes('/experiments') &&
+        !page.includes('/graph') &&
+        !page.includes('/notes') &&
+        !page.includes('/qr') &&
+        !page.includes('/uses'),
+    }),
   ],
 });
