@@ -1,9 +1,43 @@
 import { useEffect, useState } from 'react';
 import { useCreateBlockNote } from '@blocknote/react';
-import { BlockNoteView } from '@blocknote/mantine';
+import { BlockNoteView, Theme } from '@blocknote/mantine';
 import type { Block } from '@blocknote/core';
 
 const STORAGE_KEY = 'tyeetale-blocknote-v1';
+
+const lightTheme = {
+  colors: {
+    editor: { text: '#171717', background: '#fafafa' },
+    menu: { text: '#171717', background: '#f5f5f5' },
+    tooltip: { text: '#171717', background: '#e5e5e5' },
+    hovered: { text: '#171717', background: '#e5e5e5' },
+    selected: { text: '#fafafa', background: '#171717' },
+    disabled: { text: '#a3a3a3', background: '#f5f5f5' },
+    shadow: '#e5e5e5',
+    border: '#e5e5e5',
+    sideMenu: '#a3a3a3',
+  },
+  borderRadius: 6,
+  fontFamily: 'Geist, sans-serif',
+} satisfies Theme;
+
+const darkTheme = {
+  colors: {
+    editor: { text: '#e5e5e5', background: '#0a0a0a' },
+    menu: { text: '#e5e5e5', background: '#1a1a1a' },
+    tooltip: { text: '#e5e5e5', background: '#1a1a1a' },
+    hovered: { text: '#e5e5e5', background: '#1a1a1a' },
+    selected: { text: '#0a0a0a', background: '#e5e5e5' },
+    disabled: { text: '#555555', background: '#1a1a1a' },
+    shadow: '#000000',
+    border: '#1a1a1a',
+    sideMenu: '#555555',
+  },
+  borderRadius: 6,
+  fontFamily: 'Geist, sans-serif',
+} satisfies Theme;
+
+const tyeetaleTheme = { light: lightTheme, dark: darkTheme };
 
 function useThemeDetect(): 'light' | 'dark' {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
@@ -56,7 +90,7 @@ function EditorInner({ initialContent, copied, setCopied, showImport, setShowImp
   importText: string;
   setImportText: (v: string) => void;
 }) {
-  const theme = useThemeDetect();
+  const currentTheme = useThemeDetect();
   const editor = useCreateBlockNote({
     initialContent: initialContent || undefined,
   });
@@ -144,7 +178,7 @@ function EditorInner({ initialContent, copied, setCopied, showImport, setShowImp
       <div className="bn-container rounded-lg overflow-hidden min-h-[300px]">
         <BlockNoteView
           editor={editor}
-          theme={theme}
+          theme={currentTheme === 'light' ? lightTheme : darkTheme}
         />
       </div>
 
