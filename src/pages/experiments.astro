@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ShaderToy from '../components/experiments/ShaderToy';
+import PhysicsWorld from '../components/experiments/PhysicsWorld';
 ---
 
 <BaseLayout title="Experiments" description="Web experiments and widgets." path="/experiments" noindex={true}>
@@ -14,12 +16,12 @@ import Footer from '../components/Footer.astro';
     This page is unlisted. You're here because you clicked enough times.
   </p>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-    <div class="border border-border rounded-lg p-6 flex items-center justify-center min-h-[120px]">
-      <span class="text-muted text-sm">Widget 1 — coming soon</span>
+  <div class="grid grid-cols-1 gap-6 mb-10">
+    <div class="border border-border rounded-xl p-4 bg-surface/50">
+      <ShaderToy client:visible />
     </div>
-    <div class="border border-border rounded-lg p-6 flex items-center justify-center min-h-[120px]">
-      <span class="text-muted text-sm">Widget 2 — coming soon</span>
+    <div class="border border-border rounded-xl p-4 bg-surface/50">
+      <PhysicsWorld client:visible />
     </div>
   </div>
 

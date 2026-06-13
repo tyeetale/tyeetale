@@ -1,6 +1,7 @@
 ---
 import '../styles/globals.css';
 import { ViewTransitions } from 'astro:transitions';
+import CommandPalette from '../components/CommandPalette';
 
 interface Props {
   title: string;
@@ -100,6 +101,7 @@ const websiteJsonLd = {
     <div class="mx-auto w-full max-w-[640px] px-4 sm:px-6 py-8 sm:py-12 min-h-screen flex flex-col">
       <slot />
     </div>
+    <CommandPalette client:load />
     <script>
       import { inject } from '@vercel/analytics';
       inject();
