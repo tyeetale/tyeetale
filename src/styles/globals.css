@@ -48,6 +48,15 @@
   to { opacity: 1; }
 }
 
+/* BlockNote overrides */
+.bn-container {
+  --bn-colors-editor-background: var(--color-surface);
+  --bn-colors-editor-text: var(--color-foreground);
+  --bn-colors-menu-background: var(--color-surface);
+  --bn-colors-menu-text: var(--color-foreground);
+  --bn-font-family: 'Geist', sans-serif;
+}
+
 @media print {
   body {
     background: white !important;
