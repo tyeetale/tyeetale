@@ -1,0 +1,19 @@
+---
+title: "Context engineering before it had a name"
+description: "Building AI products in 2022 meant solving problems nobody had frameworks for yet."
+date: "2025-05-15"
+---
+
+Everyone talks about context engineering now. MCP servers, tool use, RAG pipelines, skills systems. There's vocabulary for it. Frameworks. Best practices.
+
+In 2022, none of that existed.
+
+When I was building Tildenn, the core problem was simple to state and brutal to solve: GPT-3 generates text, but trip planning requires facts. Real places. Real distances. Real opening hours. The model doesn't know any of this, and it will confidently lie about all of it.
+
+So you have to build the context layer yourself. From scratch.
+
+My version looked like this: take the user's natural language input, pass it to GPT-3 for intent parsing (what kind of activities, what vibe, what constraints), then use that parsed intent to query real data sources (Google Places API, Mapbox, custom databases of curated locations), then feed the validated data back into a rule engine that constructs the actual itinerary.
+
+The model never touched the final output directly. It was an input parser and idea generator. The system around it did the real work.
+
+This is what people now call "context engineering" or "agentic orchestration." Back then I just called it "making it work." The lesson: if you're building on AI capabilities that are still emerging, you can't wait for the ecosystem to tell you how. You build the patterns yourself, and sometimes they become the patterns everyone uses later.

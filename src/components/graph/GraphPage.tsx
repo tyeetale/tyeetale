@@ -88,31 +88,64 @@ export default function GraphPage() {
         <span className="text-[#555555] text-xs">drag to explore</span>
       </div>
 
-      <GraphSearch
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        activeTopics={activeTopics}
-        onTopicToggle={handleTopicToggle}
-        onClearFilters={handleClearFilters}
-      />
+      {dimensions.width > 0 && dimensions.width < 768 ? (
+        <div className="p-6 overflow-y-auto h-full pt-16">
+          <div className="max-w-md mx-auto">
+            <h2 className="text-[#e5e5e5] font-heading font-bold text-lg mb-6">Knowledge Graph</h2>
+            <p className="text-[#555] text-xs mb-6">View on desktop for the interactive graph experience.</p>
 
-      {dimensions.width > 0 && (
-        <GraphCanvas
-          graphData={graphData}
-          width={dimensions.width}
-          height={dimensions.height}
-          highlightNodeIds={highlightNodeIds}
-          onNodeClick={handleNodeClick}
-        />
+            <div className="mb-6">
+              <h3 className="text-[#555] text-xs uppercase tracking-wider mb-3">Projects</h3>
+              {graphData.nodes.filter(n => n.type === 'project').map(node => (
+                <div key={node.id} className="flex items-center gap-2 py-2 border-b border-[#1a1a1a]">
+                  <div className={`w-2 h-2 rounded-full ${node.current ? 'bg-[#4ade80]' : 'bg-[#e5e5e5]'}`} />
+                  <span className="text-[#e5e5e5] text-sm">{node.label}</span>
+                  {node.tagline && <span className="text-[#555] text-xs ml-auto">{node.tagline}</span>}
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <h3 className="text-[#555] text-xs uppercase tracking-wider mb-3">Topics</h3>
+              <div className="flex flex-wrap gap-1.5">
+                {graphData.nodes.filter(n => n.type === 'topic').map(node => (
+                  <span key={node.id} className="text-xs px-2 py-0.5 rounded bg-[#1a1a1a] text-[#a3a3a3] border border-[#333]">
+                    {node.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <>
+          <GraphSearch
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            activeTopics={activeTopics}
+            onTopicToggle={handleTopicToggle}
+            onClearFilters={handleClearFilters}
+          />
+
+          {dimensions.width > 0 && (
+            <GraphCanvas
+              graphData={graphData}
+              width={dimensions.width}
+              height={dimensions.height}
+              highlightNodeIds={highlightNodeIds}
+              onNodeClick={handleNodeClick}
+            />
+          )}
+
+          <NodeSidebar
+            node={selectedNode}
+            onClose={() => setSelectedNode(null)}
+            onNodeSelect={handleNodeSelect}
+          />
+
+          <GraphChat />
+        </>
       )}
-
-      <NodeSidebar
-        node={selectedNode}
-        onClose={() => setSelectedNode(null)}
-        onNodeSelect={handleNodeSelect}
-      />
-
-      <GraphChat />
     </div>
   );
 }
