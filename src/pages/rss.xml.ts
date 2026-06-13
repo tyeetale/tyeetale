@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
     items: projects.map((project) => ({
       title: project.data.title,
       description: project.data.tagline,
-      link: `/projects/${project.id}/`,
+      link: `/projects/${project.id.replace('.mdx', '')}/`,
     })),
   });
 }
