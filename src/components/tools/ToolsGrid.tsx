@@ -75,6 +75,12 @@ export default function ToolsGrid() {
             <ResourceLink title="Cloudflare Skills" href="https://github.com/cloudflare/skills" description="AI agent skills" />
             <ResourceLink title="Prompt Engineering Guide" href="https://github.com/dair-ai/Prompt-Engineering-Guide" description="Comprehensive prompt guide" />
             <ResourceLink title="AI Agent Frameworks" href="https://github.com/e2b-dev/awesome-ai-agents" description="Curated agent repos" />
+            <ResourceLink title="LangSmith" href="https://smith.langchain.com" description="LLM observability & evaluation" />
+            <ResourceLink title="DeepEval" href="https://github.com/confident-ai/deepeval" description="LLM evaluation framework" />
+            <ResourceLink title="OpenCode" href="https://github.com/anomalyco/opencode" description="AI-native CLI coding agent" />
+            <ResourceLink title="Dotfiles (holman)" href="https://github.com/holman/dotfiles" description="Topical dotfile organization" />
+            <ResourceLink title="Chezmoi" href="https://github.com/twpayne/chezmoi" description="Manage dotfiles across machines" />
+            <ResourceLink title="Nix Home Manager" href="https://github.com/nix-community/home-manager" description="Declarative user environments" />
           </div>
         </div>
       </BentoCard>
