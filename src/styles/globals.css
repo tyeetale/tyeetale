@@ -50,7 +50,7 @@
 
 /* BlockNote overrides */
 .bn-container {
-  --bn-colors-editor-background: var(--color-background);
+  --bn-colors-editor-background: transparent;
   --bn-colors-editor-text: var(--color-foreground);
   --bn-colors-menu-background: var(--color-surface);
   --bn-colors-menu-text: var(--color-foreground);
