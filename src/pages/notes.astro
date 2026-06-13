@@ -28,23 +28,5 @@ const notes = (await getCollection('notes')).sort((a, b) =>
     ))}
   </div>
 
-  <!-- Email signup -->
-  <div class="border border-border rounded-lg p-6 mb-12">
-    <h3 class="text-foreground text-sm font-medium mb-1">Get notified when I write</h3>
-    <p class="text-muted text-xs mb-4">No spam. Unsubscribe anytime.</p>
-    <form action="https://buttondown.com/api/emails/embed-subscribe/tyeetale" method="post" target="popupwindow" class="flex gap-2">
-      <input
-        type="email"
-        name="email"
-        placeholder="you@email.com"
-        required
-        class="flex-1 px-3 py-1.5 text-sm bg-surface border border-border rounded-md text-foreground placeholder-muted focus:outline-none focus:border-muted-foreground transition-colors"
-      />
-      <button type="submit" class="px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:opacity-90 transition-opacity">
-        subscribe
-      </button>
-    </form>
-  </div>
-
   <Footer />
 </BaseLayout>
