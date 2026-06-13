@@ -28,6 +28,8 @@ export default function TodoApp() {
   const [filter, setFilter] = useState<'all' | 'todo' | 'in-progress' | 'done'>('all');
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [subtaskInput, setSubtaskInput] = useState('');
+  const [showImport, setShowImport] = useState(false);
+  const [importText, setImportText] = useState('');
 
   useEffect(() => {
     localStorage.setItem('tyeetale-todos-full', JSON.stringify(todos));
@@ -101,6 +103,55 @@ export default function TodoApp() {
     navigator.clipboard.writeText(md.trim());
   }
 
+  function importMarkdown() {
+    if (!importText.trim()) return;
+    const lines = importText.split('\n');
+    const newTodos: Todo[] = [];
+    let currentTodo: Todo | null = null;
+
+    for (const line of lines) {
+      const trimmed = line.trimEnd();
+      // Skip headings and empty lines
+      if (trimmed.startsWith('#') || trimmed === '') continue;
+
+      // Check if it's a subtask (indented with spaces/tabs, or starts with "  -")
+      const isSubtask = /^(\s{2,}|\t)[-*]?\s*/.test(line) && currentTodo !== null;
+
+      if (isSubtask && currentTodo) {
+        // Parse subtask
+        const text = trimmed.replace(/^[-*]\s*/, '').replace(/^\[[ x]\]\s*/, '');
+        const done = /\[x\]/.test(trimmed);
+        if (text) {
+          currentTodo.subtasks.push({
+            id: crypto.randomUUID(),
+            text,
+            done,
+          });
+        }
+      } else {
+        // Parse as top-level task
+        const text = trimmed.replace(/^[-*]\s*/, '').replace(/^\[[ x]\]\s*/, '');
+        const done = /\[x\]/.test(trimmed);
+        if (text) {
+          currentTodo = {
+            id: crypto.randomUUID(),
+            text,
+            status: done ? 'done' : 'todo',
+            subtasks: [],
+            createdAt: Date.now(),
+          };
+          newTodos.push(currentTodo);
+        }
+      }
+    }
+
+    if (newTodos.length > 0) {
+      setTodos([...todos, ...newTodos]);
+      setImportText('');
+      setShowImport(false);
+    }
+  }
+
   const filtered = filter === 'all' ? todos : todos.filter(t => t.status === filter);
   const counts = {
     all: todos.length,
@@ -113,14 +164,50 @@ export default function TodoApp() {
     <div>
       <div className="flex items-center justify-between mb-2">
         <h1 className="font-heading font-bold text-xl text-foreground">Tasks</h1>
-        <button
-          onClick={exportMarkdown}
-          className="text-xs text-muted border border-border px-2 py-1 rounded hover:text-foreground transition-colors"
-        >
-          export md
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowImport(!showImport)}
+            className="text-xs text-muted border border-border px-2 py-1 rounded hover:text-foreground transition-colors"
+          >
+            import
+          </button>
+          <button
+            onClick={exportMarkdown}
+            className="text-xs text-muted border border-border px-2 py-1 rounded hover:text-foreground transition-colors"
+          >
+            export md
+          </button>
+        </div>
       </div>
-      <p className="text-muted text-sm mb-6">Manage tasks with subtasks. Persists locally. Export to markdown.</p>
+      <p className="text-muted text-sm mb-4">Manage tasks with subtasks. Persists locally. Import/export markdown.</p>
+
+      {/* Import panel */}
+      {showImport && (
+        <div className="mb-6 p-4 border border-border rounded-lg bg-surface">
+          <span className="text-xs text-muted block mb-2">Paste a markdown list (indented items become subtasks):</span>
+          <textarea
+            value={importText}
+            onChange={(e) => setImportText(e.target.value)}
+            placeholder={`- Task one\n  - Subtask A\n  - Subtask B\n- Task two\n- Task three\n  - Subtask C`}
+            rows={8}
+            className="w-full px-3 py-2 text-sm bg-background border border-border rounded-md text-foreground placeholder-muted focus:outline-none focus:border-muted-foreground resize-none font-mono mb-3"
+          />
+          <div className="flex gap-2">
+            <button
+              onClick={importMarkdown}
+              className="px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:opacity-90"
+            >
+              Import
+            </button>
+            <button
+              onClick={() => { setShowImport(false); setImportText(''); }}
+              className="px-3 py-1.5 text-sm text-muted border border-border rounded-md hover:text-foreground transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Add task */}
       <div className="flex gap-2 mb-6">
