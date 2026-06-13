@@ -1,170 +1,208 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-interface Subtask {
+interface TodoNode {
   id: string;
   text: string;
   done: boolean;
+  children: TodoNode[];
+  collapsed?: boolean;
 }
 
-interface Todo {
-  id: string;
-  text: string;
-  status: 'todo' | 'in-progress' | 'done';
-  subtasks: Subtask[];
-  createdAt: number;
+const STORAGE_KEY = 'tyeetale-todos-v2';
+
+function generateId() {
+  return crypto.randomUUID();
 }
 
 export default function TodoApp() {
-  const [todos, setTodos] = useState<Todo[]>(() => {
+  const [todos, setTodos] = useState<TodoNode[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
-      const stored = localStorage.getItem('tyeetale-todos-full');
+      const stored = localStorage.getItem(STORAGE_KEY);
       return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
+    } catch { return []; }
   });
-  const [input, setInput] = useState('');
-  const [filter, setFilter] = useState<'all' | 'todo' | 'in-progress' | 'done'>('all');
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [subtaskInput, setSubtaskInput] = useState('');
   const [showImport, setShowImport] = useState(false);
   const [importText, setImportText] = useState('');
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('tyeetale-todos-full', JSON.stringify(todos));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  function addTodo() {
-    if (!input.trim()) return;
-    setTodos([...todos, {
-      id: crypto.randomUUID(),
-      text: input.trim(),
-      status: 'todo',
-      subtasks: [],
-      createdAt: Date.now(),
-    }]);
-    setInput('');
-  }
-
-  function updateStatus(id: string, status: Todo['status']) {
-    setTodos(todos.map(t => t.id === id ? { ...t, status } : t));
-  }
-
-  function deleteTodo(id: string) {
-    setTodos(todos.filter(t => t.id !== id));
-    if (expandedId === id) setExpandedId(null);
-  }
-
-  function addSubtask(todoId: string) {
-    if (!subtaskInput.trim()) return;
-    setTodos(todos.map(t => t.id === todoId ? {
-      ...t,
-      subtasks: [...t.subtasks, { id: crypto.randomUUID(), text: subtaskInput.trim(), done: false }]
-    } : t));
-    setSubtaskInput('');
-  }
-
-  function toggleSubtask(todoId: string, subtaskId: string) {
-    setTodos(todos.map(t => t.id === todoId ? {
-      ...t,
-      subtasks: t.subtasks.map(s => s.id === subtaskId ? { ...s, done: !s.done } : s)
-    } : t));
-  }
-
-  function deleteSubtask(todoId: string, subtaskId: string) {
-    setTodos(todos.map(t => t.id === todoId ? {
-      ...t,
-      subtasks: t.subtasks.filter(s => s.id !== subtaskId)
-    } : t));
-  }
-
-  function exportMarkdown() {
-    const sections = {
-      'todo': '## Todo\n',
-      'in-progress': '## In Progress\n',
-      'done': '## Done\n',
-    };
-    let md = '# Tasks\n\n';
-    for (const [status, header] of Object.entries(sections)) {
-      const items = todos.filter(t => t.status === status);
-      if (items.length === 0) continue;
-      md += header;
-      for (const item of items) {
-        const checkbox = status === 'done' ? '[x]' : '[ ]';
-        md += `- ${checkbox} ${item.text}\n`;
-        for (const sub of item.subtasks) {
-          const subCheck = sub.done ? '[x]' : '[ ]';
-          md += `  - ${subCheck} ${sub.text}\n`;
-        }
-      }
-      md += '\n';
+  // Count all items recursively
+  function countAll(nodes: TodoNode[]): { total: number; done: number } {
+    let total = 0, done = 0;
+    for (const node of nodes) {
+      total++;
+      if (node.done) done++;
+      const child = countAll(node.children);
+      total += child.total;
+      done += child.done;
     }
-    navigator.clipboard.writeText(md.trim());
+    return { total, done };
   }
 
+  // Toggle done state (cascades to children)
+  function toggleDone(nodes: TodoNode[], id: string): TodoNode[] {
+    return nodes.map(node => {
+      if (node.id === id) {
+        const newDone = !node.done;
+        return { ...node, done: newDone, children: setAllDone(node.children, newDone) };
+      }
+      return { ...node, children: toggleDone(node.children, id) };
+    });
+  }
+
+  function setAllDone(nodes: TodoNode[], done: boolean): TodoNode[] {
+    return nodes.map(n => ({ ...n, done, children: setAllDone(n.children, done) }));
+  }
+
+  // Toggle collapse
+  function toggleCollapse(nodes: TodoNode[], id: string): TodoNode[] {
+    return nodes.map(node => {
+      if (node.id === id) return { ...node, collapsed: !node.collapsed };
+      return { ...node, children: toggleCollapse(node.children, id) };
+    });
+  }
+
+  // Update text
+  function updateText(nodes: TodoNode[], id: string, text: string): TodoNode[] {
+    return nodes.map(node => {
+      if (node.id === id) return { ...node, text };
+      return { ...node, children: updateText(node.children, id, text) };
+    });
+  }
+
+  // Delete node
+  function deleteNode(nodes: TodoNode[], id: string): TodoNode[] {
+    return nodes.filter(n => n.id !== id).map(node => ({
+      ...node, children: deleteNode(node.children, id)
+    }));
+  }
+
+  // Add sibling after a node
+  function addAfter(nodes: TodoNode[], id: string): TodoNode[] {
+    const result: TodoNode[] = [];
+    for (const node of nodes) {
+      result.push({ ...node, children: addAfter(node.children, id) });
+      if (node.id === id) {
+        const newNode = { id: generateId(), text: '', done: false, children: [] };
+        result.push(newNode);
+        // Focus the new node after render
+        setTimeout(() => setEditingId(newNode.id), 0);
+      }
+    }
+    return result;
+  }
+
+  // Indent: make node a child of the previous sibling
+  function indentNode(nodes: TodoNode[], id: string): TodoNode[] {
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].id === id && i > 0) {
+        const node = nodes[i];
+        const prev = nodes[i - 1];
+        const newNodes = [...nodes.slice(0, i), { ...prev, children: [...prev.children, node] }, ...nodes.slice(i + 1)];
+        return newNodes;
+      }
+      const updatedChildren = indentNode(nodes[i].children, id);
+      if (updatedChildren !== nodes[i].children) {
+        return nodes.map((n, idx) => idx === i ? { ...n, children: updatedChildren } : n);
+      }
+    }
+    return nodes;
+  }
+
+  // Outdent: move node up to parent's level
+  function outdentNode(nodes: TodoNode[], id: string): TodoNode[] {
+    for (let i = 0; i < nodes.length; i++) {
+      const childIdx = nodes[i].children.findIndex(c => c.id === id);
+      if (childIdx !== -1) {
+        const child = nodes[i].children[childIdx];
+        const newParentChildren = nodes[i].children.filter(c => c.id !== id);
+        const newParent = { ...nodes[i], children: newParentChildren };
+        return [...nodes.slice(0, i), newParent, child, ...nodes.slice(i + 1)];
+      }
+      const updatedChildren = outdentNode(nodes[i].children, id);
+      if (updatedChildren !== nodes[i].children) {
+        return nodes.map((n, idx) => idx === i ? { ...n, children: updatedChildren } : n);
+      }
+    }
+    return nodes;
+  }
+
+  // Add new top-level item
+  function addTopLevel() {
+    const newNode = { id: generateId(), text: '', done: false, children: [] };
+    setTodos([...todos, newNode]);
+    setTimeout(() => setEditingId(newNode.id), 0);
+  }
+
+  // Import markdown
   function importMarkdown() {
     if (!importText.trim()) return;
     const lines = importText.split('\n');
-    const newTodos: Todo[] = [];
-    let currentTodo: Todo | null = null;
+    const root: TodoNode[] = [];
+    const stack: { nodes: TodoNode[]; indent: number }[] = [{ nodes: root, indent: -1 }];
 
     for (const line of lines) {
-      const trimmed = line.trimEnd();
-      // Skip headings and empty lines
-      if (trimmed.startsWith('#') || trimmed === '') continue;
+      if (line.trim() === '' || line.trim().startsWith('#')) continue;
 
-      // Check if it's a subtask (indented with spaces/tabs, or starts with "  -")
-      const isSubtask = /^(\s{2,}|\t)[-*]?\s*/.test(line) && currentTodo !== null;
+      const match = line.match(/^(\s*)([-*]|\d+\.)\s*(\[[ x]\]\s*)?(.*)/);
+      if (!match) continue;
 
-      if (isSubtask && currentTodo) {
-        // Parse subtask
-        const text = trimmed.replace(/^[-*]\s*/, '').replace(/^\[[ x]\]\s*/, '');
-        const done = /\[x\]/.test(trimmed);
-        if (text) {
-          currentTodo.subtasks.push({
-            id: crypto.randomUUID(),
-            text,
-            done,
-          });
-        }
-      } else {
-        // Parse as top-level task
-        const text = trimmed.replace(/^[-*]\s*/, '').replace(/^\[[ x]\]\s*/, '');
-        const done = /\[x\]/.test(trimmed);
-        if (text) {
-          currentTodo = {
-            id: crypto.randomUUID(),
-            text,
-            status: done ? 'done' : 'todo',
-            subtasks: [],
-            createdAt: Date.now(),
-          };
-          newTodos.push(currentTodo);
-        }
+      const indent = match[1].length;
+      const doneMatch = match[3] || '';
+      const done = doneMatch.includes('x');
+      const text = match[4].trim();
+
+      if (!text) continue;
+
+      const node: TodoNode = { id: generateId(), text, done, children: [] };
+
+      // Find the right parent based on indent level
+      while (stack.length > 1 && stack[stack.length - 1].indent >= indent) {
+        stack.pop();
       }
+
+      stack[stack.length - 1].nodes.push(node);
+      stack.push({ nodes: node.children, indent });
     }
 
-    if (newTodos.length > 0) {
-      setTodos([...todos, ...newTodos]);
-      setImportText('');
-      setShowImport(false);
-    }
+    setTodos([...todos, ...root]);
+    setImportText('');
+    setShowImport(false);
   }
 
-  const filtered = filter === 'all' ? todos : todos.filter(t => t.status === filter);
-  const counts = {
-    all: todos.length,
-    todo: todos.filter(t => t.status === 'todo').length,
-    'in-progress': todos.filter(t => t.status === 'in-progress').length,
-    done: todos.filter(t => t.status === 'done').length,
-  };
+  // Export markdown
+  function exportMarkdown() {
+    function render(nodes: TodoNode[], depth: number): string {
+      let md = '';
+      for (const node of nodes) {
+        const indent = '  '.repeat(depth);
+        const check = node.done ? '[x]' : '[ ]';
+        md += `${indent}- ${check} ${node.text}\n`;
+        md += render(node.children, depth + 1);
+      }
+      return md;
+    }
+    const md = `# Tasks\n\n${render(todos, 0)}`;
+    navigator.clipboard.writeText(md.trim());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  const { total, done } = countAll(todos);
 
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
         <h1 className="font-heading font-bold text-xl text-foreground">Tasks</h1>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
+          {total > 0 && (
+            <span className="text-muted text-xs">{done}/{total}</span>
+          )}
           <button
             onClick={() => setShowImport(!showImport)}
             className="text-xs text-muted border border-border px-2 py-1 rounded hover:text-foreground transition-colors"
@@ -175,164 +213,237 @@ export default function TodoApp() {
             onClick={exportMarkdown}
             className="text-xs text-muted border border-border px-2 py-1 rounded hover:text-foreground transition-colors"
           >
-            export md
+            {copied ? 'copied!' : 'export md'}
           </button>
         </div>
       </div>
-      <p className="text-muted text-sm mb-4">Manage tasks with subtasks. Persists locally. Import/export markdown.</p>
+      <p className="text-muted text-sm mb-4">
+        Nested tasks with checkboxes. Tab to indent, Shift+Tab to outdent, Enter for new item.
+      </p>
 
       {/* Import panel */}
       {showImport && (
         <div className="mb-6 p-4 border border-border rounded-lg bg-surface">
-          <span className="text-xs text-muted block mb-2">Paste a markdown list (indented items become subtasks):</span>
+          <span className="text-xs text-muted block mb-2">Paste a markdown list:</span>
           <textarea
             value={importText}
             onChange={(e) => setImportText(e.target.value)}
-            placeholder={`- Task one\n  - Subtask A\n  - Subtask B\n- Task two\n- Task three\n  - Subtask C`}
+            placeholder={`- Task one\n  - Subtask A\n  - Subtask B\n- Task two`}
             rows={8}
             className="w-full px-3 py-2 text-sm bg-background border border-border rounded-md text-foreground placeholder-muted focus:outline-none focus:border-muted-foreground resize-none font-mono mb-3"
           />
           <div className="flex gap-2">
-            <button
-              onClick={importMarkdown}
-              className="px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:opacity-90"
-            >
+            <button onClick={importMarkdown} className="px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:opacity-90">
               Import
             </button>
-            <button
-              onClick={() => { setShowImport(false); setImportText(''); }}
-              className="px-3 py-1.5 text-sm text-muted border border-border rounded-md hover:text-foreground transition-colors"
-            >
+            <button onClick={() => { setShowImport(false); setImportText(''); }} className="px-3 py-1.5 text-sm text-muted border border-border rounded-md hover:text-foreground transition-colors">
               Cancel
             </button>
           </div>
         </div>
       )}
 
-      {/* Add task */}
-      <div className="flex gap-2 mb-6">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && addTodo()}
-          placeholder="Add a task..."
-          className="flex-1 px-3 py-2 text-sm bg-surface border border-border rounded-md text-foreground placeholder-muted focus:outline-none focus:border-muted-foreground"
+      {/* Task tree */}
+      <div className="mb-4">
+        <TodoTree
+          nodes={todos}
+          depth={0}
+          editingId={editingId}
+          onToggle={(id) => setTodos(toggleDone(todos, id))}
+          onCollapse={(id) => setTodos(toggleCollapse(todos, id))}
+          onUpdateText={(id, text) => setTodos(updateText(todos, id, text))}
+          onDelete={(id) => { setTodos(deleteNode(todos, id)); setEditingId(null); }}
+          onAddAfter={(id) => setTodos(addAfter(todos, id))}
+          onIndent={(id) => setTodos(indentNode(todos, id))}
+          onOutdent={(id) => setTodos(outdentNode(todos, id))}
+          onStartEdit={(id) => setEditingId(id)}
+          onStopEdit={() => setEditingId(null)}
         />
-        <button onClick={addTodo} className="px-4 py-2 text-sm bg-foreground text-background rounded-md hover:opacity-90">
-          Add
+      </div>
+
+      {/* Add button */}
+      <button
+        onClick={addTopLevel}
+        className="text-xs text-muted hover:text-foreground transition-colors"
+      >
+        + add task
+      </button>
+
+      {/* Clear all */}
+      {todos.length > 0 && (
+        <button
+          onClick={() => { if (confirm('Clear all tasks?')) setTodos([]); }}
+          className="text-xs text-muted hover:text-red-400 transition-colors ml-4"
+        >
+          clear all
+        </button>
+      )}
+    </div>
+  );
+}
+
+interface TodoTreeProps {
+  nodes: TodoNode[];
+  depth: number;
+  editingId: string | null;
+  onToggle: (id: string) => void;
+  onCollapse: (id: string) => void;
+  onUpdateText: (id: string, text: string) => void;
+  onDelete: (id: string) => void;
+  onAddAfter: (id: string) => void;
+  onIndent: (id: string) => void;
+  onOutdent: (id: string) => void;
+  onStartEdit: (id: string) => void;
+  onStopEdit: () => void;
+}
+
+function TodoTree({ nodes, depth, editingId, onToggle, onCollapse, onUpdateText, onDelete, onAddAfter, onIndent, onOutdent, onStartEdit, onStopEdit }: TodoTreeProps) {
+  return (
+    <div style={{ paddingLeft: depth > 0 ? 20 : 0 }}>
+      {nodes.map(node => (
+        <TodoItem
+          key={node.id}
+          node={node}
+          depth={depth}
+          editingId={editingId}
+          onToggle={onToggle}
+          onCollapse={onCollapse}
+          onUpdateText={onUpdateText}
+          onDelete={onDelete}
+          onAddAfter={onAddAfter}
+          onIndent={onIndent}
+          onOutdent={onOutdent}
+          onStartEdit={onStartEdit}
+          onStopEdit={onStopEdit}
+        />
+      ))}
+    </div>
+  );
+}
+
+interface TodoItemProps {
+  node: TodoNode;
+  depth: number;
+  editingId: string | null;
+  onToggle: (id: string) => void;
+  onCollapse: (id: string) => void;
+  onUpdateText: (id: string, text: string) => void;
+  onDelete: (id: string) => void;
+  onAddAfter: (id: string) => void;
+  onIndent: (id: string) => void;
+  onOutdent: (id: string) => void;
+  onStartEdit: (id: string) => void;
+  onStopEdit: () => void;
+}
+
+function TodoItem({ node, depth, editingId, onToggle, onCollapse, onUpdateText, onDelete, onAddAfter, onIndent, onOutdent, onStartEdit, onStopEdit }: TodoItemProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const isEditing = editingId === node.id;
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onStopEdit();
+      onAddAfter(node.id);
+    } else if (e.key === 'Tab' && !e.shiftKey) {
+      e.preventDefault();
+      onIndent(node.id);
+    } else if (e.key === 'Tab' && e.shiftKey) {
+      e.preventDefault();
+      onOutdent(node.id);
+    } else if (e.key === 'Backspace' && node.text === '') {
+      e.preventDefault();
+      onDelete(node.id);
+    } else if (e.key === 'Escape') {
+      onStopEdit();
+    }
+  }
+
+  const hasChildren = node.children.length > 0;
+  const childCount = node.children.length;
+  const childDone = node.children.filter(c => c.done).length;
+
+  return (
+    <div>
+      <div className="flex items-center gap-1.5 py-0.5 group">
+        {/* Collapse toggle */}
+        {hasChildren ? (
+          <button
+            onClick={() => onCollapse(node.id)}
+            className="w-4 h-4 flex items-center justify-center text-muted text-xs hover:text-foreground"
+          >
+            {node.collapsed ? '\u25B8' : '\u25BE'}
+          </button>
+        ) : (
+          <span className="w-4" />
+        )}
+
+        {/* Checkbox */}
+        <input
+          type="checkbox"
+          checked={node.done}
+          onChange={() => onToggle(node.id)}
+          className="w-3.5 h-3.5 rounded border-border accent-accent cursor-pointer"
+        />
+
+        {/* Text */}
+        {isEditing ? (
+          <input
+            ref={inputRef}
+            type="text"
+            value={node.text}
+            onChange={(e) => onUpdateText(node.id, e.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={onStopEdit}
+            className="flex-1 text-sm bg-transparent text-foreground focus:outline-none border-b border-border py-0.5"
+            placeholder="Task..."
+          />
+        ) : (
+          <span
+            onClick={() => onStartEdit(node.id)}
+            className={`flex-1 text-sm cursor-text py-0.5 ${node.done ? 'line-through text-muted' : 'text-foreground'}`}
+          >
+            {node.text || <span className="text-muted italic">empty</span>}
+          </span>
+        )}
+
+        {/* Child count */}
+        {hasChildren && !isEditing && (
+          <span className="text-muted text-[0.6rem]">{childDone}/{childCount}</span>
+        )}
+
+        {/* Delete */}
+        <button
+          onClick={() => onDelete(node.id)}
+          className="opacity-0 group-hover:opacity-100 text-muted text-xs hover:text-red-400 transition-all w-4"
+        >
+          &times;
         </button>
       </div>
 
-      {/* Filters */}
-      <div className="flex gap-2 mb-6">
-        {(['all', 'todo', 'in-progress', 'done'] as const).map(f => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`text-xs px-2.5 py-1 rounded-md border transition-colors ${
-              filter === f ? 'border-muted-foreground text-foreground bg-surface' : 'border-border text-muted hover:text-foreground'
-            }`}
-          >
-            {f === 'in-progress' ? 'in progress' : f} ({counts[f]})
-          </button>
-        ))}
-      </div>
-
-      {/* Task list */}
-      <div className="space-y-2">
-        {filtered.map(todo => (
-          <div key={todo.id} className="border border-border rounded-lg overflow-hidden">
-            <div className="flex items-center gap-3 px-3 py-2.5">
-              {/* Status selector */}
-              <select
-                value={todo.status}
-                onChange={(e) => updateStatus(todo.id, e.target.value as Todo['status'])}
-                className="text-xs bg-surface border border-border rounded px-1.5 py-0.5 text-foreground focus:outline-none"
-              >
-                <option value="todo">todo</option>
-                <option value="in-progress">in progress</option>
-                <option value="done">done</option>
-              </select>
-
-              {/* Task text */}
-              <span className={`flex-1 text-sm ${todo.status === 'done' ? 'line-through text-muted' : 'text-foreground'}`}>
-                {todo.text}
-              </span>
-
-              {/* Subtask count */}
-              {todo.subtasks.length > 0 && (
-                <span className="text-muted text-xs">
-                  {todo.subtasks.filter(s => s.done).length}/{todo.subtasks.length}
-                </span>
-              )}
-
-              {/* Expand/collapse */}
-              <button
-                onClick={() => setExpandedId(expandedId === todo.id ? null : todo.id)}
-                className="text-muted text-xs hover:text-foreground transition-colors"
-              >
-                {expandedId === todo.id ? '\u2212' : '+'}
-              </button>
-
-              {/* Delete */}
-              <button
-                onClick={() => deleteTodo(todo.id)}
-                className="text-muted text-xs hover:text-red-400 transition-colors"
-              >
-                \u00d7
-              </button>
-            </div>
-
-            {/* Expanded: subtasks */}
-            {expandedId === todo.id && (
-              <div className="border-t border-border px-3 py-2 bg-surface/50">
-                {todo.subtasks.map(sub => (
-                  <div key={sub.id} className="flex items-center gap-2 py-1">
-                    <input
-                      type="checkbox"
-                      checked={sub.done}
-                      onChange={() => toggleSubtask(todo.id, sub.id)}
-                      className="rounded border-border"
-                    />
-                    <span className={`flex-1 text-xs ${sub.done ? 'line-through text-muted' : 'text-foreground'}`}>
-                      {sub.text}
-                    </span>
-                    <button
-                      onClick={() => deleteSubtask(todo.id, sub.id)}
-                      className="text-muted text-xs hover:text-red-400"
-                    >
-                      \u00d7
-                    </button>
-                  </div>
-                ))}
-                <div className="flex gap-2 mt-2">
-                  <input
-                    type="text"
-                    value={subtaskInput}
-                    onChange={(e) => setSubtaskInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && addSubtask(todo.id)}
-                    placeholder="Add subtask..."
-                    className="flex-1 px-2 py-1 text-xs bg-background border border-border rounded text-foreground placeholder-muted focus:outline-none"
-                  />
-                  <button
-                    onClick={() => addSubtask(todo.id)}
-                    className="text-xs text-muted hover:text-foreground transition-colors px-2"
-                  >
-                    add
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-
-        {filtered.length === 0 && (
-          <p className="text-muted text-sm text-center py-8">
-            {filter === 'all' ? 'No tasks yet. Add one above.' : `No ${filter} tasks.`}
-          </p>
-        )}
-      </div>
+      {/* Children */}
+      {hasChildren && !node.collapsed && (
+        <TodoTree
+          nodes={node.children}
+          depth={depth + 1}
+          editingId={editingId}
+          onToggle={onToggle}
+          onCollapse={onCollapse}
+          onUpdateText={onUpdateText}
+          onDelete={onDelete}
+          onAddAfter={onAddAfter}
+          onIndent={onIndent}
+          onOutdent={onOutdent}
+          onStartEdit={onStartEdit}
+          onStopEdit={onStopEdit}
+        />
+      )}
     </div>
   );
 }
