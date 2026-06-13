@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PomodoroApp from '../../components/tools/PomodoroApp';
+---
+
+<BaseLayout title="Pomodoro" description="Customizable pomodoro timer with chimes and session tracking." path="/tools/pomodoro">
+  <Header />
+  <a href="/tools" class="inline-flex items-center gap-1.5 text-muted text-sm hover:text-foreground transition-colors mb-6">
+    &larr; tools
+  </a>
+  <PomodoroApp client:load />
+  <Footer />
+</BaseLayout>

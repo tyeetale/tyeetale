@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import TodoApp from '../../components/tools/TodoApp';
+---
+
+<BaseLayout title="Todo" description="Task manager with subtasks, statuses, and markdown export." path="/tools/todo">
+  <Header />
+  <a href="/tools" class="inline-flex items-center gap-1.5 text-muted text-sm hover:text-foreground transition-colors mb-6">
+    &larr; tools
+  </a>
+  <TodoApp client:load />
+  <Footer />
+</BaseLayout>

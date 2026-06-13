@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import PromptImprover from './PromptImprover';
 import SystemPromptGenerator from './SystemPromptGenerator';
 import ValuationCalc from './ValuationCalc';
@@ -13,8 +13,22 @@ export default function ToolsGrid() {
         </h2>
       </div>
       <BentoCard className="sm:col-span-2"><LiveClock /></BentoCard>
-      <BentoCard className="sm:col-span-2"><PomodoroTimer /></BentoCard>
-      <BentoCard className="sm:col-span-2"><TodoList /></BentoCard>
+      <BentoCard>
+        <a href="/tools/pomodoro" className="block group">
+          <h3 className="text-xs font-heading font-semibold uppercase tracking-widest text-foreground mb-1 group-hover:text-accent transition-colors">
+            Pomodoro Timer
+          </h3>
+          <p className="text-muted text-xs">Customizable focus sessions with chimes. &rarr;</p>
+        </a>
+      </BentoCard>
+      <BentoCard>
+        <a href="/tools/todo" className="block group">
+          <h3 className="text-xs font-heading font-semibold uppercase tracking-widest text-foreground mb-1 group-hover:text-accent transition-colors">
+            Task Manager
+          </h3>
+          <p className="text-muted text-xs">Tasks with subtasks, statuses, markdown export. &rarr;</p>
+        </a>
+      </BentoCard>
 
       {/* Developer */}
       <div className="sm:col-span-2 mt-6">
@@ -146,285 +160,6 @@ function LiveClock() {
 /* =============================================
    UTILITY TOOLS
    ============================================= */
-
-function PomodoroTimer() {
-  const [focusDuration, setFocusDuration] = useState(25);
-  const [shortBreakDuration, setShortBreakDuration] = useState(5);
-  const [longBreakDuration, setLongBreakDuration] = useState(15);
-  const [sessionsBeforeLong, setSessionsBeforeLong] = useState(4);
-  const [currentSession, setCurrentSession] = useState(1);
-  const [mode, setMode] = useState<"focus" | "shortBreak" | "longBreak">("focus");
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
-  const [isRunning, setIsRunning] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const getCurrentDuration = useCallback(() => {
-    switch (mode) {
-      case "focus": return focusDuration * 60;
-      case "shortBreak": return shortBreakDuration * 60;
-      case "longBreak": return longBreakDuration * 60;
-    }
-  }, [mode, focusDuration, shortBreakDuration, longBreakDuration]);
-
-  const playBeep = useCallback(() => {
-    try {
-      const ctx = new AudioContext();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.frequency.value = 800;
-      osc.type = "sine";
-      gain.gain.value = 0.3;
-      osc.start();
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
-      osc.stop(ctx.currentTime + 0.5);
-    } catch {
-      // Audio not supported
-    }
-  }, []);
-
-  const advanceCycle = useCallback(() => {
-    playBeep();
-    if (mode === "focus") {
-      if (currentSession >= sessionsBeforeLong) {
-        setMode("longBreak");
-        setTimeLeft(longBreakDuration * 60);
-      } else {
-        setMode("shortBreak");
-        setTimeLeft(shortBreakDuration * 60);
-      }
-    } else {
-      // After any break, go to next focus
-      const nextSession = mode === "longBreak" ? 1 : currentSession + 1;
-      setCurrentSession(nextSession);
-      setMode("focus");
-      setTimeLeft(focusDuration * 60);
-    }
-    setIsRunning(true);
-  }, [mode, currentSession, sessionsBeforeLong, focusDuration, shortBreakDuration, longBreakDuration, playBeep]);
-
-  useEffect(() => {
-    if (isRunning) {
-      intervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            advanceCycle();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    }
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isRunning, advanceCycle]);
-
-  const reset = () => {
-    setIsRunning(false);
-    setMode("focus");
-    setCurrentSession(1);
-    setTimeLeft(focusDuration * 60);
-  };
-
-  const mins = Math.floor(timeLeft / 60).toString().padStart(2, "0");
-  const secs = (timeLeft % 60).toString().padStart(2, "0");
-  const totalTime = getCurrentDuration();
-  const progress = ((totalTime - timeLeft) / totalTime) * 100;
-
-  const modeLabel = mode === "focus" ? `Focus ${currentSession}/${sessionsBeforeLong}` : mode === "shortBreak" ? "Short Break" : "Long Break";
-  const progressColor = mode === "focus" ? "hsl(0, 70%, 60%)" : mode === "shortBreak" ? "hsl(140, 70%, 50%)" : "hsl(210, 70%, 55%)";
-
-  const DurationInput = ({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) => (
-    <div className="flex items-center gap-2">
-      <span className="text-xs text-muted w-24">{label}</span>
-      <button onClick={() => onChange(Math.max(1, value - 1))} className="w-6 h-6 text-sm border border-border rounded text-foreground hover:bg-surface flex items-center justify-center">-</button>
-      <span className="text-xs font-mono text-foreground w-6 text-center">{value}</span>
-      <button onClick={() => onChange(Math.min(99, value + 1))} className="w-6 h-6 text-sm border border-border rounded text-foreground hover:bg-surface flex items-center justify-center">+</button>
-      <span className="text-[10px] text-muted">min</span>
-    </div>
-  );
-
-  return (
-    <div>
-      <div className="flex flex-col sm:flex-row items-center gap-4">
-        <div className="flex-1 w-full">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted uppercase tracking-widest">Pomodoro</span>
-            <span className="text-xs text-muted-foreground">— {modeLabel}</span>
-          </div>
-          <div className="font-heading text-4xl text-foreground font-bold tracking-tight tabular-nums mt-1">
-            {mins}:{secs}
-          </div>
-          <div className="w-full bg-border rounded-full h-1.5 mt-2">
-            <div
-              className="h-1.5 rounded-full transition-all duration-1000"
-              style={{ width: `${progress}%`, backgroundColor: progressColor }}
-            />
-          </div>
-          {/* Session dots */}
-          <div className="flex gap-1 mt-2">
-            {Array.from({ length: sessionsBeforeLong }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-2 h-2 rounded-full ${i < currentSession - (mode === "focus" ? 1 : 0) ? "bg-foreground" : i === currentSession - 1 && mode === "focus" ? "bg-foreground/50" : "bg-border"}`}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setIsRunning(!isRunning)}
-            className="px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:opacity-90"
-          >
-            {isRunning ? "Pause" : "Start"}
-          </button>
-          <button
-            onClick={reset}
-            className="px-3 py-1.5 text-sm border border-border rounded-md text-foreground hover:bg-surface"
-          >
-            Reset
-          </button>
-          <button
-            onClick={() => setShowSettings(!showSettings)}
-            className="px-3 py-1.5 text-sm border border-border rounded-md text-foreground hover:bg-surface"
-          >
-            {showSettings ? "Hide" : "Settings"}
-          </button>
-        </div>
-      </div>
-      {showSettings && (
-        <div className="mt-3 pt-3 border-t border-border space-y-2">
-          <DurationInput label="Focus" value={focusDuration} onChange={(v) => { setFocusDuration(v); if (mode === "focus" && !isRunning) setTimeLeft(v * 60); }} />
-          <DurationInput label="Short break" value={shortBreakDuration} onChange={(v) => { setShortBreakDuration(v); if (mode === "shortBreak" && !isRunning) setTimeLeft(v * 60); }} />
-          <DurationInput label="Long break" value={longBreakDuration} onChange={(v) => { setLongBreakDuration(v); if (mode === "longBreak" && !isRunning) setTimeLeft(v * 60); }} />
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted w-24">Sessions</span>
-            <button onClick={() => setSessionsBeforeLong(Math.max(2, sessionsBeforeLong - 1))} className="w-6 h-6 text-sm border border-border rounded text-foreground hover:bg-surface flex items-center justify-center">-</button>
-            <span className="text-xs font-mono text-foreground w-6 text-center">{sessionsBeforeLong}</span>
-            <button onClick={() => setSessionsBeforeLong(Math.min(10, sessionsBeforeLong + 1))} className="w-6 h-6 text-sm border border-border rounded text-foreground hover:bg-surface flex items-center justify-center">+</button>
-            <span className="text-[10px] text-muted">before long break</span>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function TodoList() {
-  interface Todo {
-    id: string;
-    text: string;
-    done: boolean;
-  }
-
-  const [todos, setTodos] = useState<Todo[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const stored = localStorage.getItem("tyeetale-todos");
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
-  const [input, setInput] = useState("");
-  const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("tyeetale-todos", JSON.stringify(todos));
-    } catch {
-      // Storage unavailable
-    }
-  }, [todos]);
-
-  const addTodo = () => {
-    const text = input.trim();
-    if (!text) return;
-    setTodos((prev) => [...prev, { id: crypto.randomUUID(), text, done: false }]);
-    setInput("");
-  };
-
-  const toggleTodo = (id: string) => {
-    setTodos((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
-  };
-
-  const deleteTodo = (id: string) => {
-    setTodos((prev) => prev.filter((t) => t.id !== id));
-  };
-
-  const exportMarkdown = () => {
-    const lines = ["## Todos", ...todos.map((t) => `- [${t.done ? "x" : " "}] ${t.text}`)];
-    navigator.clipboard.writeText(lines.join("\n"));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
-  return (
-    <div>
-      <div className="flex items-center justify-between">
-        <span className="text-xs text-muted uppercase tracking-widest">Todo List</span>
-        {todos.length > 0 && (
-          <button
-            onClick={exportMarkdown}
-            className="px-2 py-1 text-[10px] border border-border rounded text-muted hover:text-foreground hover:bg-surface"
-          >
-            {copied ? "Copied!" : "Export MD"}
-          </button>
-        )}
-      </div>
-      <div className="flex gap-2 mt-2">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter") addTodo(); }}
-          placeholder="Add a task..."
-          className="flex-1 bg-surface border border-border rounded-md text-foreground text-sm px-3 py-2 focus:outline-none focus:border-muted-foreground"
-        />
-        <button
-          onClick={addTodo}
-          className="px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:opacity-90"
-        >
-          Add
-        </button>
-      </div>
-      <div className="mt-3 space-y-1 max-h-[200px] overflow-y-auto">
-        {todos.map((todo) => (
-          <div key={todo.id} className="flex items-center gap-2 group py-1 border-b border-border/50 last:border-0">
-            <input
-              type="checkbox"
-              checked={todo.done}
-              onChange={() => toggleTodo(todo.id)}
-              className="w-3.5 h-3.5 rounded border-border accent-foreground cursor-pointer"
-            />
-            <span className={`flex-1 text-sm ${todo.done ? "line-through text-muted" : "text-foreground"}`}>
-              {todo.text}
-            </span>
-            <button
-              onClick={() => deleteTodo(todo.id)}
-              className="text-muted hover:text-red-400 text-sm opacity-0 group-hover:opacity-100 transition-opacity px-1"
-            >
-              x
-            </button>
-          </div>
-        ))}
-        {todos.length === 0 && (
-          <div className="text-xs text-muted py-2">No tasks yet. Add one above.</div>
-        )}
-      </div>
-      {todos.length > 0 && (
-        <div className="text-[10px] text-muted mt-2">
-          {todos.filter((t) => t.done).length}/{todos.length} completed
-        </div>
-      )}
-    </div>
-  );
-}
 
 function JsonFormatter() {
   const [input, setInput] = useState("");
